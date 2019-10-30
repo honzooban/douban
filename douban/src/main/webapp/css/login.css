@@ -1,0 +1,72 @@
+body{
+	margin: 0;
+	padding: 0;
+	max-width: 1920px;
+　　min-width: 1280px;
+	background-size:100%;
+	background-image:url("/hon/image/timg.jpg");
+}
+.login-form{
+	width: 300px;
+	padding: 20px;
+	text-align: center;
+	margin: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	/*top: 200px;
+	left: 250px*/
+	transition: translate(-50%,-50%);
+	overflow: hidden;
+}
+.login-form h1{
+	margin-top: 100px;
+	font-family: 'Permanent Marker',cursive;
+	color: #584029;
+	font-size: 40px;
+}
+.login-form input{
+	margin-bottom:0px;
+	display: block;
+	width: 90%;
+	padding: 0 16px;
+	height: 40px;
+	text-align: center;
+	box-sizing: border-box;
+	outline: none;
+	border: none;
+	font-family: "montserrat",sans-serif;
+}
+.txtb{
+	margin:20px 0;
+	background: rgba(255, 255, 255, .5);
+	border-radius: 16px;
+}
+.login-btn{
+	margin-top: 30px;
+	margin-bottom: 20px;
+	background: #97d8a1;
+	color: #584029;
+	border-radius: 44px;
+	cursor: pointer;
+	transition: 0.8s;
+}
+.login-btn:hover{
+	transform: scale(0.96);
+}
+.login-form a{
+	margin-top:20px;
+	margin-right:20px;
+	text-decoration: none;
+	color: #584029;
+	font-family:"montserrat",sans-serif;
+	font-size: 14px;
+	padding: 10px;
+	transition: 0.8s;
+	display: block;
+}
+.login-form a:hover{
+	background: rgba(0, 0, 0, .3);
+}

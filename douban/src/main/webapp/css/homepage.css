@@ -1,0 +1,138 @@
+a{
+  text-decoration: none;
+  white-space:nowrap;
+}
+
+.items:hover{
+  background-color:green;
+  color:#ffffff;
+  text-decoration: none;
+}
+
+.top-line {
+  margin:0;
+  padding:0;
+  background-color:#edf4ed;
+  height:65px;
+  width:100%;
+  margin-top:-7px;
+}
+
+.line-logo{
+  float:left;
+  display:inline
+}
+
+.line-items{
+  float:left;
+  height:auto;
+  margin-left:40px;
+}
+
+.line-search{
+  margin-left:1000px;
+}
+
+.upload {
+  display: block;
+  width: 120px;
+  height: 119px;
+  position: absolute;
+  top: 91.5px;
+  left:260px;
+  opacity: 0;
+}
+
+.submitpic{
+  position: absolute;
+  width: 80px;
+  height: 20px;
+  margin-left: 263px;
+  margin-top: 10px;
+  border: 0;
+  color:#ffffff;
+  background-color: #30983f;
+  border-radius: 44px;
+  cursor: pointer;
+  transition: 0.8s;
+}
+
+.submitpic:hover{
+	transform: scale(0.96);
+}
+
+.message{
+  margin-top:90px;
+  margin-left: 430px;
+}
+
+
+.font-info{
+	font-family:'Microsoft Yahei';
+	font-size: 16px;
+}
+
+.info-tab{
+  width:280px;
+  height:180px;
+  margin-top:-130px;
+  margin-left:400px;
+}
+
+#imgPreview{
+  margin-left:240px;
+  margin-top:50px;
+  width:120px;
+  height:120px;
+}
+
+.fritype{
+  width: 50px;
+  height: 30px;
+  border: 0;
+  color:#ffffff;
+  background-color: #30983f;
+  border-radius: 44px;
+  cursor: pointer;
+  transition: 0.8s;
+}
+
+li{
+	list-style:none;
+}
+
+.friobj dd{
+	float:left;
+	width:48%; 
+	display:inline-block;
+	margin:0px;
+}
+
+.content{
+  margin-top:40px;
+  margin-left: 220px;
+  position: absolute;
+}
+
+.asize{
+  margin-top:240px;
+  margin-left:520px;
+  position: absolute;
+}
+
+hr{
+	background: #e6e6e6;        
+    border: none;        
+    height: 1px; 
+}
+
+.mf-btn{
+   	width: 87px;
+ 	height: 30px;
+  	border: 0;
+  	color:#ffffff;
+  	background-color: #30983f;
+  	border-radius: 44px;
+  	cursor: pointer;
+  	transition: 0.8s;
+}
