@@ -12,7 +12,7 @@ function agreeArticle(uid,id,num){
 		return;
 	}
 	$.ajax({
-		url:"http://localhost:8080/douban/UserServlet?method=agree",
+		url:"http://localhost:8080/douban/user/login",
 		type:"post",
 		data:{"uid":uid,"id":id,"num":num,"field":"article"},
 		async: true,

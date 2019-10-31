@@ -1,6 +1,5 @@
 package com.douban.controller;
 
-import com.douban.domain.User;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

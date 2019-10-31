@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.PrivateletterDao">
+  <resultMap id="BaseResultMap" type="domain.Privateletter">
+    <id column="privateletter_id" jdbcType="INTEGER" property="privateletterId" />
+    <result column="privateletter_info" jdbcType="VARCHAR" property="privateletterInfo" />
+    <result column="privateletter_infostatus" jdbcType="VARCHAR" property="privateletterInfostatus" />
+    <result column="privateletter_time" jdbcType="TIMESTAMP" property="privateletterTime" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_byid" jdbcType="INTEGER" property="userByid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    privateletter_id, privateletter_info, privateletter_infostatus, privateletter_time, 
+    user_id, user_byid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from privateletter
+    where privateletter_id = #{privateletterId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from privateletter
+    where privateletter_id = #{privateletterId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="domain.Privateletter">
+    insert into privateletter (privateletter_id, privateletter_info, 
+      privateletter_infostatus, privateletter_time, 
+      user_id, user_byid)
+    values (#{privateletterId,jdbcType=INTEGER}, #{privateletterInfo,jdbcType=VARCHAR}, 
+      #{privateletterInfostatus,jdbcType=VARCHAR}, #{privateletterTime,jdbcType=TIMESTAMP}, 
+      #{userId,jdbcType=INTEGER}, #{userByid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="domain.Privateletter">
+    insert into privateletter
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="privateletterId != null">
+        privateletter_id,
+      </if>
+      <if test="privateletterInfo != null">
+        privateletter_info,
+      </if>
+      <if test="privateletterInfostatus != null">
+        privateletter_infostatus,
+      </if>
+      <if test="privateletterTime != null">
+        privateletter_time,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userByid != null">
+        user_byid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="privateletterId != null">
+        #{privateletterId,jdbcType=INTEGER},
+      </if>
+      <if test="privateletterInfo != null">
+        #{privateletterInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="privateletterInfostatus != null">
+        #{privateletterInfostatus,jdbcType=VARCHAR},
+      </if>
+      <if test="privateletterTime != null">
+        #{privateletterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userByid != null">
+        #{userByid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="domain.Privateletter">
+    update privateletter
+    <set>
+      <if test="privateletterInfo != null">
+        privateletter_info = #{privateletterInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="privateletterInfostatus != null">
+        privateletter_infostatus = #{privateletterInfostatus,jdbcType=VARCHAR},
+      </if>
+      <if test="privateletterTime != null">
+        privateletter_time = #{privateletterTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userByid != null">
+        user_byid = #{userByid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where privateletter_id = #{privateletterId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="domain.Privateletter">
+    update privateletter
+    set privateletter_info = #{privateletterInfo,jdbcType=VARCHAR},
+      privateletter_infostatus = #{privateletterInfostatus,jdbcType=VARCHAR},
+      privateletter_time = #{privateletterTime,jdbcType=TIMESTAMP},
+      user_id = #{userId,jdbcType=INTEGER},
+      user_byid = #{userByid,jdbcType=INTEGER}
+    where privateletter_id = #{privateletterId,jdbcType=INTEGER}
+  </update>
+</mapper>

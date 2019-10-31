@@ -6,7 +6,7 @@
 <title>豆瓣-登录</title>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
 	<link href="https://fonts.font.im/css?family=Permanent+Marker" rel="stylesheet">
-	<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+	<script src="./js/jquery-3.4.0.min.js"></script>
 	<script type="text/javascript" src="./js/login.js"></script>
 	<link rel="stylesheet" type="text/css" href="./css/login.css">
 </head>
@@ -18,7 +18,7 @@
 			<table>
 				<tr>
 					<td><input type="text" value="" value="" class="txtb" id="code" maxlength="4" placeholder="验证码"></td>
-					<td><img border=0 id="checkCode" style="width: 80px;margin-top:20px" src="" onclick="changeCode()"/></td>
+					<td><img border=0 id="checkCode" style="width: 80px;margin-top:20px" src="" /></td>
 				</tr>
 			</table>
 			<input type="button" onclick="login('${sessionScope.user.name}')" class="login-btn" value="登录">

@@ -66,23 +66,6 @@
       <version>1.9.0</version>
     </dependency>
 
-    <!-- 引入shiro安全框架 -->
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-core</artifactId>
-      <version>1.4.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-web</artifactId>
-      <version>1.4.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.shiro</groupId>
-      <artifactId>shiro-spring</artifactId>
-      <version>1.4.0</version>
-    </dependency>
-
     <!-- Mybatis3.4.1 -->
     <dependency>
       <groupId>org.mybatis</groupId>
@@ -227,34 +210,6 @@
       <groupId>org.apache.lucene</groupId>
       <artifactId>lucene-core</artifactId>
       <version>5.3.1</version>
-    </dependency>
-
-    <!--一般分词器，适用于英文分词-->
-    <dependency>
-      <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-analyzers-common</artifactId>
-      <version>7.3.1</version>
-    </dependency>
-
-    <!--中文分词器-->
-    <dependency>
-      <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-analyzers-smartcn</artifactId>
-      <version>7.3.1</version>
-    </dependency>
-
-    <!--对分词索引查询解析-->
-    <dependency>
-      <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-queryparser</artifactId>
-      <version>7.3.1</version>
-    </dependency>
-
-    <!--检索关键字高亮显示-->
-    <dependency>
-      <groupId>org.apache.lucene</groupId>
-      <artifactId>lucene-highlighter</artifactId>
-      <version>7.3.1</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
@@ -433,6 +388,15 @@
         <plugin>
           <artifactId>maven-deploy-plugin</artifactId>
           <version>2.8.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.mybatis.generator</groupId>
+          <artifactId>mybatis-generator-maven-plugin</artifactId>
+          <version>1.3.5</version>
+          <configuration>
+            <verbose>true</verbose>
+            <overwrite>true</overwrite>
+          </configuration>
         </plugin>
       </plugins>
     </pluginManagement>

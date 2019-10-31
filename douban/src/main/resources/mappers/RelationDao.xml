@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.RelationDao">
+  <resultMap id="BaseResultMap" type="domain.Relation">
+    <id column="relation_id" jdbcType="INTEGER" property="relationId" />
+    <result column="relation_type" jdbcType="VARCHAR" property="relationType" />
+    <result column="relation_status" jdbcType="VARCHAR" property="relationStatus" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_byid" jdbcType="INTEGER" property="userByid" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    relation_id, relation_type, relation_status, user_id, user_byid
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from relation
+    where relation_id = #{relationId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from relation
+    where relation_id = #{relationId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="domain.Relation">
+    insert into relation (relation_id, relation_type, relation_status, 
+      user_id, user_byid)
+    values (#{relationId,jdbcType=INTEGER}, #{relationType,jdbcType=VARCHAR}, #{relationStatus,jdbcType=VARCHAR}, 
+      #{userId,jdbcType=INTEGER}, #{userByid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="domain.Relation">
+    insert into relation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="relationId != null">
+        relation_id,
+      </if>
+      <if test="relationType != null">
+        relation_type,
+      </if>
+      <if test="relationStatus != null">
+        relation_status,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="userByid != null">
+        user_byid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="relationId != null">
+        #{relationId,jdbcType=INTEGER},
+      </if>
+      <if test="relationType != null">
+        #{relationType,jdbcType=VARCHAR},
+      </if>
+      <if test="relationStatus != null">
+        #{relationStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userByid != null">
+        #{userByid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="domain.Relation">
+    update relation
+    <set>
+      <if test="relationType != null">
+        relation_type = #{relationType,jdbcType=VARCHAR},
+      </if>
+      <if test="relationStatus != null">
+        relation_status = #{relationStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="userByid != null">
+        user_byid = #{userByid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where relation_id = #{relationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="domain.Relation">
+    update relation
+    set relation_type = #{relationType,jdbcType=VARCHAR},
+      relation_status = #{relationStatus,jdbcType=VARCHAR},
+      user_id = #{userId,jdbcType=INTEGER},
+      user_byid = #{userByid,jdbcType=INTEGER}
+    where relation_id = #{relationId,jdbcType=INTEGER}
+  </update>
+</mapper>
