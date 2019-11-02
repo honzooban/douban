@@ -1,6 +1,6 @@
 package com.douban.dao;
 
-import domain.Picture;
+import com.douban.domain.Picture;
 
 public interface PictureDao {
     int deleteByPrimaryKey(Integer pictureId);

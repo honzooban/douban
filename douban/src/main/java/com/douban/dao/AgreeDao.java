@@ -1,6 +1,6 @@
 package com.douban.dao;
 
-import domain.Agree;
+import com.douban.domain.Agree;
 
 public interface AgreeDao {
     int deleteByPrimaryKey(Integer agreeId);

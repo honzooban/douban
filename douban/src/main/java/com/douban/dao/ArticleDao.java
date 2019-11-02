@@ -1,6 +1,6 @@
 package com.douban.dao;
 
-import domain.Article;
+import com.douban.domain.Article;
 
 public interface ArticleDao {
     int deleteByPrimaryKey(Integer articleId);

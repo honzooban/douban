@@ -1,6 +1,6 @@
 package com.douban.dao;
 
-import domain.Comment;
+import com.douban.domain.Comment;
 
 public interface CommentDao {
     int deleteByPrimaryKey(Integer commentId);

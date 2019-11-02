@@ -2,13 +2,12 @@
  * 登录验证
  * @returns
  */
-function login(uid){
-	var username = $("#username").val();
+function login(){
+	var phone = $("#phone").val();
 	var password = $("#password").val();
-	var code = $("#code").val();
-	if(username == ""){
-		alert("用户名不能为空");
-		$("#username").focus();
+	if(phone == ""){
+		alert("手机号码不能为空");
+		$("#phone").focus();
 		return;
 	}
 	if(password == ""){
@@ -16,54 +15,33 @@ function login(uid){
 		$("#password").focus();
 		return;
 	}
-	if(code == ""){
-		alert("验证码不能为空");
-		$("#code").focus();
-		return;
-	}
-	if(uid==username){
-		alert("你已经登录过该账号");
-		return;
-	}
 	$.ajax({
-		url:"http://localhost:8080/douban/LoginServlet?obj=0",
+		url:"http://localhost:8080/douban/user/login.do",
 		type:"post",
-		data:{"username":username,"password":password,"code":code},
-		async: true,
+		data:JSON.stringify({"phone":phone,"password":password}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		beforeSend:function(){
 			$("#login").val("登陆中");
 		},
 		success:function(msg){
-			if(msg=="false"){
-				$("#username").val("");
+			if(msg.code == 400){
+				$("#phone").val("");
 				$("#password").val("");
 				alert("账号或密码有误，请重新输入");
 				$("#login").val("登录");
+				return;
 			}
-			if(msg=="codefalse"){
-				$("#code").val("");
-				alert("验证码有误，请重新输入");
-				$("#login").val("登录");
-			}
-			if(msg=="banned"){
+			if(msg.code == 403){
 				alert("该账号正处于封禁状态，请联系管理员解封");
 				window.location.reload();
+				return;
 			}
-			if(msg=="user"){
+			if(msg.code == 200){
 				alert("登录成功，欢迎你的使用");
 				window.location.href="user_homepage.jsp";
+				return;
 			}
 		}
 	});
 }
-
-/**
- * 验证码刷新
- */
-window.onload = function () {
-    var img = document.getElementById("checkCode");
-    img.onclick = function () {
-       var date = new Date().getTime();
-       img.src = "CheckCodeServlet?"+date;
-    }
-};

@@ -5,6 +5,6 @@
 <configuration>
     <!-- 设置别名 -->
     <typeAliases>
-        <package name="com.douban.domain" />
+        <!--<package name="com.douban.domain" />-->
     </typeAliases>
 </configuration>

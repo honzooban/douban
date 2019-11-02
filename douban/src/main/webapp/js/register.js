@@ -4,11 +4,11 @@
  */
 $(document).ready(function(){
 	$("#register").click(function(){
-		var username = $("#username").val();
+		var name = $("#username").val();
 		var password = $("#password").val();
 		var npassword = $("#npassword").val();
-		var email = $("#email").val();
-		if(username == ""){
+		var phone = $("#phone").val();
+		if(name == ""){
 			$("#username").focus();
 			alert("用户名不能为空");
 			return;
@@ -29,12 +29,12 @@ $(document).ready(function(){
 			alert("前后密码不同，请重新输入");
 			return;
 		}
-		if(email == ""){
-			$("#email").focus();
-			alert("邮箱地址不能为空");
+		if(phone == ""){
+			$("#phone").focus();
+			alert("手机号码不能为空");
 			return;
 		}
-		if (username.length < 6 || username.length>25 || !username.match("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$")) {
+		if (name.length < 6 || name.length>25 || !name.match("^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,20}$")) {
 			$("#username").focus();
 			alert("用户名格式不规范");
 			return
@@ -43,29 +43,37 @@ $(document).ready(function(){
 			alert("密码格式为字母数字组合且不能含有特殊字符");
 			return;
 		}
-		if(!email.match("^[A-Za-z\\d]+([-_.][A-Za-z\\d]+)*@([A-Za-z\\d]+[-.])+[A-Za-z\\d]{2,4}$")){
+		if(!phone.match("^[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][1,8,9]))[0-9]{8}$")){
 			$("#email").focus();
-			alert("邮箱地址格式有误");
+			alert("手机号码格式有误");
 			return;
 		}
 		$.ajax({
-			url:"http://localhost:8080/hon/RegisterServlet",
+			url:"http://localhost:8080/douban/user/register.do",
 			type:"post",
-			data:{"username":username,"password":password,"email":email},
-			async: true,
+			data:JSON.stringify({"name":name,"password":password,"phone":phone}),
+			contentType:"application/json;charset=utf-8",
+			dataType:"json",
+
 			beforeSend:function(){
 				$("#register").val("注册中");
 			},
 			success:function(msg){
-				if(msg=="false"){
-					$("#username").val("");
-					$("#email").val("");
-					alert("该用户名或邮箱已被注册，请重新输入");
+				if(msg.code == 500){
+					alert(msg.msg);
+					$("#phone").val("");
 					$("#register").val("注册");
+					return;
 				}
-				if(msg=="true"){
-					alert("注册成功");
+				if(msg.code == 400){
+					alert(msg.msg);
+					$("#register").val("注册");
+					return;
+				}
+				if(msg.code == 200){
+					alert(msg.msg);
 					window.location.href="user_login.jsp";
+					return;
 				}
 			}
 		});

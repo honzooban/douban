@@ -9,7 +9,7 @@
     <display-name>Archetype Created Web Application</display-name>
 
     <welcome-file-list>
-        <welcome-file>homepage.jsp</welcome-file>
+        <welcome-file>user_login.jsp</welcome-file>
     </welcome-file-list>
 
     <!-- 添加对spring的支持 -->

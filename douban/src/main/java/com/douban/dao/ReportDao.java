@@ -1,6 +1,6 @@
 package com.douban.dao;
 
-import domain.Report;
+import com.douban.domain.Report;
 
 public interface ReportDao {
     int deleteByPrimaryKey(Integer reportId);

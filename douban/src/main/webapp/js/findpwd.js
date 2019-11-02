@@ -4,28 +4,30 @@
  */
 $(document).ready(function(){
 	$("#findpwd").click(function(){
-		var email = $("#email").val();
 		var code = $("#code").val();
+        var phone = $("#email").val();
 		if(code == ""){
 			alert("验证码不能为空");
 			$("#code").focus();
 			return;
 		}
 		$.ajax({
-			url:"http://localhost:8080/hon/UserServlet?method=checkcode",
+			url:"http://localhost:8080/douban/user/checkCode.do",
 			type:"post",
-			data:{"email":email,"code":code},
-			async: true,
-			beforeSend:function(){
-				$("#findpwd").val("请稍等");
-			},
+			data:JSON.stringify({"code":code,"phone":phone}),
+			contentType:"application/json;charset=utf-8",
+			dataType:"json",
+
 			success:function(msg){
-				if(msg=="false"){
+				if(msg.code == 400){
 					$("#code").val("");
-					alert("验证码有误，请重新输入");
+					alert(msg.msg);
 					$("#findpwd").val("确认");
-				}else{
+					return;
+				}
+				if(msg.code == 200){
 					window.location.href="user_updatepwd.jsp";
+					return;
 				}
 			}
 		});
@@ -38,33 +40,41 @@ $(document).ready(function(){
  */
 $(document).ready(function(){
 	$('#sendemail').click(function(){
-		var email = $("#email").val();
-		if(email == ""){
-			alert("邮箱地址不能为空");
+		var phone = $("#email").val();
+		if(phone == ""){
+			alert("手机号码不能为空");
 			$("#email").focus();
 			return;
 		}
-		if(!email.match("^[A-Za-z\\d]+([-_.][A-Za-z\\d]+)*@([A-Za-z\\d]+[-.])+[A-Za-z\\d]{2,4}$")){
+		if(!phone.match("^[1](([3][0-9])|([4][5-9])|([5][0-3,5-9])|([6][5,6])|([7][0-8])|([8][0-9])|([9][1,8,9]))[0-9]{8}$")){
 			$("#email").focus();
-			alert("邮箱地址格式有误");
+			alert("手机号码格式有误");
 			return;
 		}
 		$.ajax({
-			url:"http://localhost:8080/hon/UserServlet?method=sendcode",
+			url:"http://localhost:8080/douban/user/sendCode.do",
 			type:"post",
-			data:{"email":email},
-			async: true,
-			beforeSend:function(){
-				$("#sendemail").val("发送中");
-			},
-			success:function(msg){
-				if(msg=="false"){
+			data:JSON.stringify({"phone":phone}),
+			contentType:"application/json;charset=utf-8",
+			dataType:"json",
+
+			success:function(msg) {
+				if (msg.code == 404) {
+                    alert(msg.msg);
 					$("#email").val("");
 					$("#sendemail").val("发送验证码");
-					alert("该邮箱未注册，请重新输入");
-				}else{
+					return;
+				}
+                if (msg.code == 400) {
+                    alert(msg.msg);
+                    $("#email").val("");
+                    $("#sendemail").val("发送验证码");
+                    return;
+                }
+				if (msg.code == 200) {
+                    alert(msg.msg);
 					$("#sendemail").val("发送验证码");
-					alert("验证码发送成功，请到您的邮箱查看");
+					return;
 				}
 			}
 		});
@@ -95,21 +105,29 @@ $(document).ready(function(){
 			return;
 		}
 		$.ajax({
-			url:"http://localhost:8080/hon/UserServlet?method=updatepwd",
+			url:"http://localhost:8080/douban/user/updatePassword.do",
 			type:"post",
-			data:{"password":password,"npassword":npassword},
-			async: true,
+			data:JSON.stringify({"password":password}),
+            contentType:"application/json;charset=utf-8",
+            dataType:"json",
 			beforeSend:function(){
 				$("#findpwd").val("请稍等");
 			},
 			success:function(msg){
-				if(msg=="false"){
+				if(msg.code == 400){
+                    alert(msg.msg);
 					$("#code").val("");
-					alert("修改密码失败，请重新修改");
 					$("#findpwd").val("确认");
-				}else{
-					alert("修改密码成功");
+					return;
+				}
+				if(msg.code == 404){
+                    alert(msg.msg);
+                    window.location.href="user_findpwd.jsp"
+                }
+				if(msg.code == 200){
+					alert(msg.msg);
 					window.location.href="user_login.jsp";
+					return;
 				}
 			}
 		});

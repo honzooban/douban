@@ -1,6 +1,6 @@
 package com.douban.dao;
 
-import domain.Privateletter;
+import com.douban.domain.Privateletter;
 
 public interface PrivateletterDao {
     int deleteByPrimaryKey(Integer privateletterId);

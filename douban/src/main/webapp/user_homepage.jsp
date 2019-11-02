@@ -7,11 +7,10 @@
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>豆瓣</title>
     <link rel="stylesheet" type="text/css" href="./css/homepage.css">
-    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="./js/jquery-3.4.0.min.js"></script>
 	<script type="text/javascript" src="./js/homepage.js"></script>
   </head>
   <body>
-  	<sql:setDataSource var="snapshot" driver="com.mysql.jdbc.Driver"  url="jdbc:mysql://localhost/douban" user="root" password="123456"/>
     <div id="homepage-top" class="homepage-top">
       <div class="top-line">
             <div class="line-logo">
@@ -28,7 +27,7 @@
             </div>
             <div class="line-search">
                   <div><input id="searchtext" size="22" style="width:278px;height:28px;border:0px;margin-top:19px;" maxlength="60" autocomplete="off" value="" placeholder="搜索你感兴趣的内容和人..."></div>
-                  <div style="float:right;margin-top:-30px;margin-right:211.5px;"><input type="button" onclick="search()" value="" style="border:0px;width:30px;height:30px;background:url(/hon/image/search.png);background-color:#ffffff;background-size:100%;background-repeat:no-repeat;" /></div>
+                  <div style="float:right;margin-top:-30px;margin-right:211.5px;"><input type="button" onclick="search()" value="" style="border:0px;width:30px;height:30px;background:url(./image/search.png);background-color:#ffffff;background-size:100%;background-repeat:no-repeat;" /></div>
             </div>
       </div>
     </div>

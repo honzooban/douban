@@ -1,93 +1,93 @@
 package com.douban.domain;
 
 public class User {
-    private Integer userId;
+    private Integer id;
 
-    private String userName;
+    private String name;
 
-    private String userPassword;
+    private String password;
 
-    private String userEmail;
+    private String phone;
 
-    private String userPic;
+    private String avatar;
 
-    private String userSex;
+    private String gender;
 
-    private String userSignature;
+    private String signature;
 
-    private String userType;
+    private String status;
 
-    private String userBantime;
+    private String banTime;
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName == null ? null : userName.trim();
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public void setUserPassword(String userPassword) {
-        this.userPassword = userPassword == null ? null : userPassword.trim();
+    public void setPassword(String password) {
+        this.password = password;
     }
 
-    public String getUserEmail() {
-        return userEmail;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setUserEmail(String userEmail) {
-        this.userEmail = userEmail == null ? null : userEmail.trim();
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
-    public String getUserPic() {
-        return userPic;
+    public String getAvatar() {
+        return avatar;
     }
 
-    public void setUserPic(String userPic) {
-        this.userPic = userPic == null ? null : userPic.trim();
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
-    public String getUserSex() {
-        return userSex;
+    public String getGender() {
+        return gender;
     }
 
-    public void setUserSex(String userSex) {
-        this.userSex = userSex == null ? null : userSex.trim();
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 
-    public String getUserSignature() {
-        return userSignature;
+    public String getSignature() {
+        return signature;
     }
 
-    public void setUserSignature(String userSignature) {
-        this.userSignature = userSignature == null ? null : userSignature.trim();
+    public void setSignature(String signature) {
+        this.signature = signature;
     }
 
-    public String getUserType() {
-        return userType;
+    public String getStatus() {
+        return status;
     }
 
-    public void setUserType(String userType) {
-        this.userType = userType == null ? null : userType.trim();
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public String getUserBantime() {
-        return userBantime;
+    public String getBanTime() {
+        return banTime;
     }
 
-    public void setUserBantime(String userBantime) {
-        this.userBantime = userBantime == null ? null : userBantime.trim();
+    public void setBanTime(String banTime) {
+        this.banTime = banTime;
     }
 }

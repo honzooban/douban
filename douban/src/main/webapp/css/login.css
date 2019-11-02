@@ -4,7 +4,7 @@ body{
 	max-width: 1920px;
 　　min-width: 1280px;
 	background-size:100%;
-	background-image:url("/hon/image/timg.jpg");
+	background-image:url("../image/timg.jpg");
 }
 .login-form{
 	width: 300px;

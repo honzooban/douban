@@ -1,6 +1,6 @@
 package com.douban.dao;
 
-import domain.Relation;
+import com.douban.domain.Relation;
 
 public interface RelationDao {
     int deleteByPrimaryKey(Integer relationId);

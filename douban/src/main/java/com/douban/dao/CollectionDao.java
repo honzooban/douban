@@ -1,6 +1,6 @@
 package com.douban.dao;
 
-import domain.Collection;
+import com.douban.domain.Collection;
 
 public interface CollectionDao {
     int deleteByPrimaryKey(Integer collectionId);
