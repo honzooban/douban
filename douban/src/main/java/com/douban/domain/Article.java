@@ -1,96 +1,96 @@
 package com.douban.domain;
 
 public class Article {
-    private Integer articleId;
+    private Integer id;
 
-    private String articleTitle;
+    private String title;
 
-    private String articleContent;
+    private String content;
 
-    private String articleTime;
+    private String time;
 
-    private Integer articleStatus;
+    private Integer status;
 
-    private String articleType;
+    private String type;
 
-    private Integer articleCommentnum;
+    private Integer commentNum;
 
-    private Integer articleTranspondnum;
+    private Integer transpondNum;
 
-    private Integer articleAgreementnum;
+    private Integer agreementNum;
 
     private Integer userId;
 
-    public Integer getArticleId() {
-        return articleId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setArticleId(Integer articleId) {
-        this.articleId = articleId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getArticleTitle() {
-        return articleTitle;
+    public String getTitle() {
+        return title;
     }
 
-    public void setArticleTitle(String articleTitle) {
-        this.articleTitle = articleTitle == null ? null : articleTitle.trim();
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getArticleContent() {
-        return articleContent;
+    public String getContent() {
+        return content;
     }
 
-    public void setArticleContent(String articleContent) {
-        this.articleContent = articleContent == null ? null : articleContent.trim();
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getArticleTime() {
-        return articleTime;
+    public String getTime() {
+        return time;
     }
 
-    public void setArticleTime(String articleTime) {
-        this.articleTime = articleTime == null ? null : articleTime.trim();
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public Integer getArticleStatus() {
-        return articleStatus;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setArticleStatus(Integer articleStatus) {
-        this.articleStatus = articleStatus;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public String getArticleType() {
-        return articleType;
+    public String getType() {
+        return type;
     }
 
-    public void setArticleType(String articleType) {
-        this.articleType = articleType == null ? null : articleType.trim();
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public Integer getArticleCommentnum() {
-        return articleCommentnum;
+    public Integer getCommentNum() {
+        return commentNum;
     }
 
-    public void setArticleCommentnum(Integer articleCommentnum) {
-        this.articleCommentnum = articleCommentnum;
+    public void setCommentNum(Integer commentNum) {
+        this.commentNum = commentNum;
     }
 
-    public Integer getArticleTranspondnum() {
-        return articleTranspondnum;
+    public Integer getTranspondNum() {
+        return transpondNum;
     }
 
-    public void setArticleTranspondnum(Integer articleTranspondnum) {
-        this.articleTranspondnum = articleTranspondnum;
+    public void setTranspondNum(Integer transpondNum) {
+        this.transpondNum = transpondNum;
     }
 
-    public Integer getArticleAgreementnum() {
-        return articleAgreementnum;
+    public Integer getAgreementNum() {
+        return agreementNum;
     }
 
-    public void setArticleAgreementnum(Integer articleAgreementnum) {
-        this.articleAgreementnum = articleAgreementnum;
+    public void setAgreementNum(Integer agreementNum) {
+        this.agreementNum = agreementNum;
     }
 
     public Integer getUserId() {

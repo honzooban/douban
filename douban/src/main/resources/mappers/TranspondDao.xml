@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.douban.dao.TranspondDao">
+  <resultMap id="BaseResultMap" type="com.douban.domain.Transpond">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="info" jdbcType="VARCHAR" property="info" />
+    <result column="agreement_num" jdbcType="INTEGER" property="agreementNum" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="article_id" jdbcType="INTEGER" property="articleId" />
+  </resultMap>
+
+  <insert id="insertTranspond">
+    insert into transpond(info,time,user_id,article_id) values(#{info},#{time},#{userId},#{articleId});
+    update transpond set agreement_num = agreement_num + 1 where article_id = #{articleId}
+  </insert>
+</mapper>

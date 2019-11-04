@@ -1,9 +1,16 @@
 package com.douban.domain;
 
-public class Agree {
-    private Integer agreeId;
+import com.douban.commons.Constant;
 
-    private String agreeTime;
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.Map;
+
+public class Agree {
+
+    private Integer id;
+
+    private Timestamp time;
 
     private Integer commentId;
 
@@ -13,20 +20,40 @@ public class Agree {
 
     private Integer userId;
 
-    public Integer getAgreeId() {
-        return agreeId;
+    public Map<String, Object> getById(){
+        Map<String, Object> map = new HashMap<>(2);
+        if(this.articleId != null){
+            map.put(Constant.ID,this.articleId);
+            map.put(Constant.TYPE,Constant.ARTICLE_ID);
+            return map;
+        }
+        if(this.commentId != null){
+            map.put(Constant.ID,this.commentId);
+            map.put(Constant.TYPE,Constant.COMMENT_ID);
+            return map;
+        }
+        if(this.transpondId != null) {
+            map.put(Constant.ID,this.transpondId);
+            map.put(Constant.TYPE,Constant.TRANSPOND_ID);
+            return map;
+        }
+        return null;
     }
 
-    public void setAgreeId(Integer agreeId) {
-        this.agreeId = agreeId;
+    public Integer getId() {
+        return id;
     }
 
-    public String getAgreeTime() {
-        return agreeTime;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public void setAgreeTime(String agreeTime) {
-        this.agreeTime = agreeTime == null ? null : agreeTime.trim();
+    public Timestamp getTime() {
+        return time;
+    }
+
+    public void setTime(Timestamp time) {
+        this.time = time;
     }
 
     public Integer getCommentId() {

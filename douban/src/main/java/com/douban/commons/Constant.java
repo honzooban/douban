@@ -12,5 +12,24 @@ public class Constant {
 
     public static final String PASSWORD = "password";
 
+    public static final String AVATAR = "avatar";
+
+    public static final String GENDER = "gender";
+
+    public static final String SIGNATURE = "signature";
+
+    public static final String ID = "id";
+
+    public static final String USER = "user";
+
+    public static final int PAGE_SIZE = 5;
+
+    public static final String ARTICLE_ID = "article_id";
+
+    public static final String COMMENT_ID = "comment_id";
+
+    public static final String TRANSPOND_ID = "transpond_id";
+
+    public static final String TYPE = "type";
 
 }

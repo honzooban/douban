@@ -1,17 +1,16 @@
 package com.douban.dao;
 
-import com.douban.domain.Article;
+import com.douban.domain.UserAndArticle;
+
+import java.util.List;
 
 public interface ArticleDao {
-    int deleteByPrimaryKey(Integer articleId);
 
-    int insert(Article record);
+    /**
+     * 获取首页
+     * @return
+     */
+    List<UserAndArticle> getUserAndArticle();
 
-    int insertSelective(Article record);
 
-    Article selectByPrimaryKey(Integer articleId);
-
-    int updateByPrimaryKeySelective(Article record);
-
-    int updateByPrimaryKey(Article record);
 }

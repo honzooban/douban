@@ -2,7 +2,7 @@ package com.douban.domain;
 
 import java.sql.Timestamp;
 
-public class Comment {
+public class Transpond {
 
     private Integer id;
 

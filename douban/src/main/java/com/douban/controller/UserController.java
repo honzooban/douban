@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,54 +30,88 @@ public class UserController {
      * @return 登录结果
      */
     @RequestMapping("login")
-    public Result login(@RequestBody User user, HttpServletRequest request){
+    public Result login(@RequestBody User user, HttpServletRequest request) {
         return userService.login(user, request);
     }
 
     /**
      * 发送验证码
+     *
      * @param user 用户信息
      * @return 发送结果
      */
     @RequestMapping("sendCode")
-    public Result getPhoneCode(@RequestBody Map<String, Object> user, HttpServletRequest request){
+    public Result getPhoneCode(@RequestBody Map<String, Object> user, HttpServletRequest request) {
         return userService.getPhoneCode(user, request);
     }
 
     /**
      * 验证验证码
+     *
      * @param msg 手机号码和验证码
      * @return 验证结果
      */
     @RequestMapping("checkCode")
-    public Result checkPhoneCode(@RequestBody Map<String, String> msg, HttpServletRequest request){
+    public Result checkPhoneCode(@RequestBody Map<String, String> msg, HttpServletRequest request) {
         return userService.checkPhoneCode(msg, request);
     }
 
     /**
      * 修改密码
+     *
      * @return
      */
     @RequestMapping("updatePassword")
-    public Result updatePassword(@RequestBody Map<String, String> user, HttpServletRequest request){
+    public Result updatePassword(@RequestBody Map<String, String> user, HttpServletRequest request) {
         return userService.updatePassword(user, request);
     }
 
     /**
      * 用户注册
+     *
      * @param user 用户信息
      * @return 注册结果
      */
     @RequestMapping("register")
-    public Result register(@RequestBody User user){
+    public Result register(@RequestBody User user) {
         return userService.register(user);
     }
 
-    @RequestMapping("/homepage")
-    public ModelAndView getHomepageData(){
+    /**
+     * 获取用户个人中心页面的数据
+     * @param request
+     * @return
+     */
+    @RequestMapping("homepage")
+    public ModelAndView getHomepageData(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("user_homepage");
-        //mv.add
+        mv.addObject("userInfo", userService.getUserInfo(request));
+        mv.addObject("friends", userService.getFriendsById(request));
         return mv;
+    }
+
+    /**
+     * 获取个人信息页面的数据
+     * @param request
+     * @return
+     */
+    @RequestMapping("updateInfo")
+    public ModelAndView getUpdateInfoData(HttpServletRequest request){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("user_updateinfo");
+        mv.addObject("userInfo",userService.getUserInfo(request));
+        return mv;
+    }
+
+    /**
+     * 修改用户个人资料
+     * @param file 头像
+     * @param request
+     * @return 修改结果
+     */
+    @RequestMapping("updateUser")
+    public Result updateUserInfo(MultipartFile file, HttpServletRequest request){
+        return userService.updateUserInfo(file, request);
     }
 }

@@ -9,16 +9,20 @@
     <result column="avatar" jdbcType="VARCHAR" property="avatar" />
     <result column="gender" jdbcType="VARCHAR" property="gender" />
     <result column="signature" jdbcType="VARCHAR" property="signature" />
-    <result column="type" jdbcType="VARCHAR" property="status" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="ban_time" jdbcType="VARCHAR" property="banTime" />
   </resultMap>
 
   <select id="login" parameterType="com.douban.domain.User" resultMap="BaseResultMap">
-    select id,name,avatar,gender,signature from user where phone = #{phone} and password = #{password}
+    select id,phone,status,ban_time from user where phone = #{phone} and password = #{password}
+  </select>
+
+  <select id="test" resultMap="BaseResultMap">
+    select * from user where 1 = 1
   </select>
 
   <select id="selectUserByPhone" resultMap="BaseResultMap">
-    select * from user where phone = #{phone}
+    select id,name,phone,avatar,gender,signature,status from user where phone = #{phone}
   </select>
 
   <update id="updatePassword">
@@ -28,4 +32,12 @@
   <insert id="register" parameterType="com.douban.domain.User">
     insert into user(name,phone,password) values (#{name},#{phone},#{password})
   </insert>
+
+  <select id="getFriendsById" resultMap="BaseResultMap">
+      select name,avatar from user u inner join relation r on u.id = r.user_byid where r.user_id = #{id} and r.status = 1 limit 0,10
+  </select>
+
+  <update id="updateUserInfo">
+    update user set avatar = #{avatar}, gender = #{gender}, signature = #{signature} where id = #{id};
+  </update>
 </mapper>

@@ -4,6 +4,8 @@ import com.douban.commons.Constant;
 import com.douban.domain.User;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface UserDao {
 
     /**
@@ -34,4 +36,18 @@ public interface UserDao {
      * @return 注册结果
      */
     int register(User user);
+
+    /**
+     * 获取用户好友名单
+     * @param id 用户id
+     * @return
+     */
+    List<User> getFriendsById(int id);
+
+    /**
+     * 修改用户个人资料
+     * @param user 用户信息
+     * @return 修改结果
+     */
+    int updateUserInfo(User user);
 }

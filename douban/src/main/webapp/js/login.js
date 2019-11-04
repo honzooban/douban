@@ -25,6 +25,11 @@ function login(){
 			$("#login").val("登陆中");
 		},
 		success:function(msg){
+			if(msg.code == 200){
+				alert("登录成功，欢迎你的使用");
+				window.location.href = "http://localhost:8080/douban/user/homepage.do";
+				return;
+			}
 			if(msg.code == 400){
 				$("#phone").val("");
 				$("#password").val("");
@@ -37,11 +42,17 @@ function login(){
 				window.location.reload();
 				return;
 			}
-			if(msg.code == 200){
-				alert("登录成功，欢迎你的使用");
-				window.location.href="user_homepage.jsp";
-				return;
-			}
 		}
 	});
 }
+
+// function enter(){
+// 	console.log("进入enter");
+// 	$.ajax({
+// 		url:"http://localhost:8080/douban/user/homepage.do",
+// 		type:"post",
+// 		success:function(){
+// 			console.log("成功了");
+// 		}
+// 	});
+// }

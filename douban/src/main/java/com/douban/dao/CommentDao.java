@@ -3,15 +3,12 @@ package com.douban.dao;
 import com.douban.domain.Comment;
 
 public interface CommentDao {
-    int deleteByPrimaryKey(Integer commentId);
 
-    int insert(Comment record);
+    /**
+     * 用户评论文章
+     * @param comment 评论内容
+     * @return 评论结果
+     */
+    int insertComment(Comment comment);
 
-    int insertSelective(Comment record);
-
-    Comment selectByPrimaryKey(Integer commentId);
-
-    int updateByPrimaryKeySelective(Comment record);
-
-    int updateByPrimaryKey(Comment record);
 }

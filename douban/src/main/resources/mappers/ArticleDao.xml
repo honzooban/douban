@@ -1,17 +1,50 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.douban.dao.ArticleDao">
-  <resultMap id="BaseResultMap" type="com.douban.domain.Article">
-    <id column="article_id" jdbcType="INTEGER" property="articleId" />
-    <result column="article_title" jdbcType="VARCHAR" property="articleTitle" />
-    <result column="article_content" jdbcType="VARCHAR" property="articleContent" />
-    <result column="article_time" jdbcType="VARCHAR" property="articleTime" />
-    <result column="article_status" jdbcType="INTEGER" property="articleStatus" />
-    <result column="article_type" jdbcType="VARCHAR" property="articleType" />
-    <result column="article_commentnum" jdbcType="INTEGER" property="articleCommentnum" />
-    <result column="article_transpondnum" jdbcType="INTEGER" property="articleTranspondnum" />
-    <result column="article_agreementnum" jdbcType="INTEGER" property="articleAgreementnum" />
+    <resultMap id="BaseResultMap" type="com.douban.domain.Article">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="time" jdbcType="VARCHAR" property="time" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+    <result column="transpond_num" jdbcType="INTEGER" property="transpondNum" />
+    <result column="agreement_num" jdbcType="INTEGER" property="agreementNum" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
-  </resultMap>
+    </resultMap>
+
+    <resultMap id="UserAndArticleMap" type="com.douban.domain.UserAndArticle">
+      <collection property="user" ofType="com.douban.domain.User">
+          <id column="id" jdbcType="INTEGER" property="id" />
+          <result column="name" jdbcType="VARCHAR" property="name" />
+          <result column="password" jdbcType="VARCHAR" property="password" />
+          <result column="phone" jdbcType="VARCHAR" property="phone" />
+          <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+          <result column="gender" jdbcType="VARCHAR" property="gender" />
+          <result column="signature" jdbcType="VARCHAR" property="signature" />
+          <result column="status" jdbcType="VARCHAR" property="status" />
+          <result column="ban_time" jdbcType="VARCHAR" property="banTime" />
+      </collection>
+      <collection property="article" ofType="com.douban.domain.Article">
+          <id column="id" jdbcType="INTEGER" property="id" />
+          <result column="title" jdbcType="VARCHAR" property="title" />
+          <result column="content" jdbcType="VARCHAR" property="content" />
+          <result column="time" jdbcType="VARCHAR" property="time" />
+          <result column="status" jdbcType="INTEGER" property="status" />
+          <result column="type" jdbcType="VARCHAR" property="type" />
+          <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+          <result column="transpond_num" jdbcType="INTEGER" property="transpondNum" />
+          <result column="agreement_num" jdbcType="INTEGER" property="agreementNum" />
+          <result column="user_id" jdbcType="INTEGER" property="userId" />
+      </collection>
+    </resultMap>
+
+    <select id="getUserAndArticle" resultMap="UserAndArticleMap">
+        select avatar,name,article.id,title,content,type,comment_num,transpond_num,agreement_num from user inner join article
+        on user.id = article.user_id
+        where user.id in (select id from user) order by article.status desc, article.time desc
+    </select>
+
 
 </mapper>

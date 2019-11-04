@@ -2,12 +2,41 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.douban.dao.AgreeDao">
   <resultMap id="BaseResultMap" type="com.douban.domain.Agree">
-    <id column="agree_id" jdbcType="INTEGER" property="agreeId" />
-    <result column="agree_time" jdbcType="VARCHAR" property="agreeTime" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="comment_id" jdbcType="INTEGER" property="commentId" />
     <result column="transpond_id" jdbcType="INTEGER" property="transpondId" />
     <result column="article_id" jdbcType="INTEGER" property="articleId" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
 
+  <select id="selectAgreeById" resultMap="BaseResultMap">
+    select id from agree where user_id = #{id} and
+    <if test="type == 'article_id'">article_id</if>
+    <if test="type == 'comment_id'">comment_id</if>
+    <if test="type == 'transpond_id'">transpond_id</if>
+     = #{byId};
+  </select>
+
+  <insert id="insertAgreeRecord">
+    insert into agree(time,user_id,
+      <if test="commentId != null">comment_id</if>
+      <if test="transpondId != null">transpond_id</if>
+      <if test="articleId != null">article_id</if>
+    ) values(
+      #{time},#{userId},
+      <if test="commentId != null">#{commentId}</if>
+      <if test="transpondId != null">#{transpondId}</if>
+      <if test="articleId != null">#{articleId}</if>
+    );
+
+    update
+      <if test="commentId != null">comment</if>
+      <if test="transpondId != null">transpond</if>
+      <if test="articleId != null">article</if>
+    set agreement_num = agreement_num + 1 where id =
+      <if test="commentId != null">#{commentId}</if>
+      <if test="transpondId != null">#{transpondId}</if>
+      <if test="articleId != null">#{articleId}</if>
+  </insert>
 </mapper>

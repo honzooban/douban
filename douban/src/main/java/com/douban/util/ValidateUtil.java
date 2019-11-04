@@ -1,6 +1,7 @@
 package com.douban.util;
 
-import com.douban.commons.Constant;
+import com.douban.domain.User;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -9,7 +10,17 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class ValidateUtil {
 
-    public static boolean isPhoneAlive(HttpServletRequest request){
-        return request.getSession().getAttribute(Constant.PHONE) != null;
+    public static boolean isSessionExist(HttpServletRequest request, String msg){
+        return request.getSession().getAttribute(msg) != null;
+    }
+
+    public static boolean isUploadAvatarSuccess(User user, MultipartFile file, String type){
+        String url = UploadFileUtil.uploadFile(file, type);
+        if(url != null){
+            user.setAvatar(url);
+            return true;
+        }else{
+            return false;
+        }
     }
 }

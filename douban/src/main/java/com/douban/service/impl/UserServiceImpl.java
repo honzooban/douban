@@ -11,12 +11,17 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Map;
 
 /**
- * @author 93231
+ *
+ * @auther: 93231
+ * @date: 2019/11/3 23:20
+ * @version: 1.0
  */
 @Service
 public class UserServiceImpl implements UserService {
@@ -34,7 +39,7 @@ public class UserServiceImpl implements UserService {
             return new Result(400,"用户名或密码有误，请重新输入",null);
         }
         if(result.getBanTime() == null){
-            request.getSession().setAttribute("user", result);
+            request.getSession().setAttribute(Constant.USER, result);
             return new Result(200,"登录成功，欢迎你的使用",null);
         }else{
             return new Result(403,"你的账号已被封禁至" + result.getBanTime() + "，请联系管理员", null);
@@ -53,7 +58,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result updatePassword(Map<String, String> user, HttpServletRequest request) {
-        if(!ValidateUtil.isPhoneAlive(request)){
+        if(!ValidateUtil.isSessionExist(request, Constant.PHONE)){
             return new Result(404,"找不到用户信息，请重新试试",null);
         }
         String password = DigestUtils.md5DigestAsHex(user.get(Constant.PASSWORD).getBytes());
@@ -72,6 +77,32 @@ public class UserServiceImpl implements UserService {
             return new Result(500, "该手机号码已被注册，请更换你的手机号码",null);
         }
 
+    }
+
+    @Override
+    public User getUserInfo(HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute(Constant.USER);
+        return userDao.selectUserByPhone(user.getPhone());
+    }
+
+    @Override
+    public List<User> getFriendsById(HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute(Constant.USER);
+        return userDao.getFriendsById(user.getId());
+    }
+
+    @Override
+    public Result updateUserInfo(MultipartFile file, HttpServletRequest request) {
+        int id = Integer.parseInt(request.getParameter(Constant.ID));
+        String gender = request.getParameter(Constant.GENDER);
+        String signature = request.getParameter(Constant.SIGNATURE);
+        User user = new User(id, gender, signature);
+        if(ValidateUtil.isUploadAvatarSuccess(user, file, Constant.AVATAR)) {
+            return userDao.updateUserInfo(user) == 1 ? new Result(200, "修改成功", null) :
+                    new Result(400, "修改失败，请重试", null);
+        }else{
+            return new Result(400,"头像上传失败，请重试",null);
+        }
     }
 
     @Override

@@ -19,6 +19,7 @@ public class User {
 
     private String banTime;
 
+
     public Integer getId() {
         return id;
     }
@@ -89,5 +90,13 @@ public class User {
 
     public void setBanTime(String banTime) {
         this.banTime = banTime;
+    }
+
+    public User(){}
+
+    public User(int id, String gender, String signature) {
+        this.id = id;
+        this.gender = gender;
+        this.signature = signature;
     }
 }

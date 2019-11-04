@@ -11,16 +11,20 @@ function agreeArticle(uid,aid,num){
 		return;
 	}
 	$.ajax({
-		url:"http://localhost:8080/hon/UserServlet?method=agree",
+		url:"http://localhost:8080/douban/agree/agreeArticle.do",
 		type:"post",
-		data:{"uid":uid,"id":aid,"num":num,"field":"article"},
-		async: true,
+		data:JSON.stringify({"articleId":aid}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
+			if(msg.code == 200){
 				window.location.reload();
-			}else{
-				alert("你已点赞过了，请勿重复点赞");
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
 				window.location.reload();
+				return;
 			}
 		}
 	});
@@ -41,16 +45,20 @@ function agreeTranspond(uid,tid,num){
 		return;
 	}
 	$.ajax({
-		url:"http://localhost:8080/hon/UserServlet?method=agree",
+		url:"http://localhost:8080/douban/agree/agreeTranspond.do",
 		type:"post",
-		data:{"uid":uid,"id":tid,"num":num,"field":"transpond"},
-		async: true,
+		data:JSON.stringify({"transpondId":tid}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
+			if(msg.code == 200){
 				window.location.reload();
-			}else{
-				alert("你已点赞过了，请勿重复点赞");
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
 				window.location.reload();
+				return;
 			}
 		}
 	});
@@ -99,20 +107,27 @@ function transpond(uid,flag){
  * @param flag
  * @returns
  */
-function commentSubmit(uid,num,aid,flag){
+function commentSubmit(uid,aid,flag){
 	var comment = document.getElementById(flag).value;
 	$.ajax({
-		url:"http://localhost:8080/hon/UserServlet?method=comment",
+		url:"http://localhost:8080/douban/comment/commentArticle.do",
 		type:"post",
-		data:{"uid":uid,"aid":aid,"comment":comment,"num":num},
-		async: true,
+		data:JSON.stringify({"articleId":aid,"info":comment}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
-				alert("评论成功");
+			if(msg.code == 200){
+				alert(msg.msg);
 				window.location.reload();
-			}else{
-				alert("评论失败");
-				window.location.reload();
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+				return;
+			}
+			if(msg.code == 404){
+				alert(msg.msg);
+				return;
 			}
 		}
 	});
@@ -125,20 +140,27 @@ function commentSubmit(uid,num,aid,flag){
  * @param flag
  * @returns
  */
-function transpondSubmit(uid,num,aid,flag){
+function transpondSubmit(uid,aid,flag){
 	var content = document.getElementById(flag).value;
 	$.ajax({
-		url:"http://localhost:8080/hon/UserServlet?method=transpond",
+		url:"http://localhost:8080/douban/transpond/transpondArticle.do",
 		type:"post",
-		data:{"uid":uid,"aid":aid,"num":num,"content":content},
-		async: true,
+		data:JSON.stringify({"articleId":aid,"info":content}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
-				alert("转发成功");
+			if(msg.code == 200){
+				alert(msg.msg);
 				window.location.reload();
-			}else{
-				alert("转发失败");
-				window.location.reload();
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+				return;
+			}
+			if(msg.code == 404){
+				alert(msg.msg);
+				return;
 			}
 		}
 	});
