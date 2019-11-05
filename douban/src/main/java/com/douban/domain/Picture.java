@@ -1,26 +1,28 @@
 package com.douban.domain;
 
-public class Picture {
-    private Integer pictureId;
 
-    private String pictureUrl;
+public class Picture {
+
+    private Integer id;
+
+    private String url;
 
     private Integer articleId;
 
-    public Integer getPictureId() {
-        return pictureId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setPictureId(Integer pictureId) {
-        this.pictureId = pictureId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getPictureUrl() {
-        return pictureUrl;
+    public String getUrl() {
+        return url;
     }
 
-    public void setPictureUrl(String pictureUrl) {
-        this.pictureUrl = pictureUrl == null ? null : pictureUrl.trim();
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public Integer getArticleId() {

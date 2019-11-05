@@ -1,28 +1,31 @@
 package com.douban.domain;
 
-public class Collection {
-    private Integer collectionId;
+import java.sql.Timestamp;
 
-    private String collectionTime;
+public class Collection {
+
+    private Integer id;
+
+    private Timestamp time;
 
     private Integer userId;
 
     private Integer articleId;
 
-    public Integer getCollectionId() {
-        return collectionId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setCollectionId(Integer collectionId) {
-        this.collectionId = collectionId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getCollectionTime() {
-        return collectionTime;
+    public Timestamp getTime() {
+        return time;
     }
 
-    public void setCollectionTime(String collectionTime) {
-        this.collectionTime = collectionTime == null ? null : collectionTime.trim();
+    public void setTime(Timestamp time) {
+        this.time = time;
     }
 
     public Integer getUserId() {

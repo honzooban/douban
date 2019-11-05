@@ -19,9 +19,9 @@
             <div class="line-items">
               <table style="height:67px;">
                 <tr>
-					<td style="text-align:center;width:120px;"><a class="items" href="../article/mainpage.do"><font style="color:#007722;">首页</font></a></td>
-					<td style="text-align:center;width:120px;"><a class="items" href="./homepage.do"><font style="color:#007722;">我的豆瓣</font></a></td>
-					<td style="text-align:center;width:120px;"><a class="items" href="./doumail.do"><font style="color:#007722;">我的豆邮</font></a></td>
+					<td style="text-align:center;width:120px;"><a class="items" href="../article/getArticles.do?pn=1"><font style="color:#007722;">首页</font></a></td>
+					<td style="text-align:center;width:120px;"><a class="items" href="../user/homepage.do"><font style="color:#007722;">我的豆瓣</font></a></td>
+					<td style="text-align:center;width:120px;"><a class="items" href="../relation/getPrivateletter.do"><font style="color:#007722;">我的豆邮</font></a></td>
                 </tr>
               </table>
             </div>
@@ -33,17 +33,17 @@
             </div>
       </div>
     </div>
-    <div style="margin-top:20px;margin-left:500px;"><a href="PageServlet?page=1&method=mp">文章专区</a><a style="margin-left:200px;" href="PageServlet?page=1&method=tp">转发专区</a></div>
+    <div style="margin-top:20px;margin-left:500px;"><a href="../article/getArticles.do?pn=1">文章专区</a><a style="margin-left:200px;" href="../transpond/getTransponds.do?pn=1">转发专区</a></div>
     <div id="mainpage-mid" style="margin-top:-450px;margin-left:-30px;width:1000px;">
 		<div id="content" style="margin-top:500px">
-			<c:forEach var="item" items="${pageInfo.list}">
+			<c:forEach var="item" items="${article.list}">
 					<div style="margin-top:-180px">
 						<div>
 							<div style="margin-left:200px;margin-top:200px"><img src="${item.user.avatar}" style="width:60px;height:60px;" /></div>
 							<div style="margin-left:200px">${item.user.name}</div>
 						</div>
 						<div style="width:1000px;">
-							<div style="margin-left:270px;margin-top:-85px;"><a id="wrap" href="user_article.jsp?aid=${item.article.id}">${item.article.title}</a></div>
+							<div style="margin-left:270px;margin-top:-85px;"><a id="wrap" href="../article/getArticle.do?id=${item.article.id}">${item.article.title}</a></div>
 							<div style="margin-left:890px;margin-top:-20px;"><font color="#777777">类型：${item.article.type}</font></div>
                                 <div style="margin-left:270px;margin-top:15px;">${item.article.content}</div>
 						</div>
@@ -57,55 +57,48 @@
 						<hr style="margin-left:195px;margin-top:20px;width:800px"/>
 					</div>
 			</c:forEach>
-			<%--<c:forEach var="transpond" items="${pageTranspond.articles}">--%>
-				<%--<sql:query dataSource="${snapshot}" var="result">--%>
-        			<%--SELECT user.user_id,user_name,article.article_id,article_title,article_content,transpond_id FROM USER INNER JOIN article INNER JOIN transpond ON transpond.`user_id` = ? AND transpond_time = ? AND article.`article_id` = transpond.`article_id` AND user.`user_id` = article.`user_id`;--%>
-        			<%--<sql:param value="${transpond.userId}" />--%>
-        			<%--<sql:param value="${transpond.time}" />--%>
-        		<%--</sql:query>--%>
-        		<%--<c:forEach var="row" items="${result.rows}">--%>
-        			<%--<div style="margin-top:-180px">--%>
-						<%--<div style="margin-left:200px;">--%>
-							<%--<div style="margin-top:200px"><img src="${transpond.upic}" style="width:60px;height:60px;" /></div>--%>
-							<%--<div style=""><a href="user_userpage.jsp?id=${transpond.userId}">${transpond.uname}</a></div>--%>
-							<%--<div style="margin-left:80px;margin-top:-90px;"><font style="size:12px;color:#777777">转发说：</font>${transpond.content}</div>	--%>
-							<%--<div style="background-color:#f9f9f9;width:700px;margin-left:80px;">--%>
-								<%--<div><a href="user_userpage.jsp?id=${row.user_id}">${row.user_name}</a></div>--%>
-								<%--<div style="margin-top:5px;"><a href="user_article.jsp?aid=${row.article_id}">${row.article_title}</a></div>--%>
-								<%--<div style="margin-top:5px;width:700px;height:100px;overflow-y:auto"><font style="size:6px;color:#777777">${row.article_content}</font></div>--%>
-							<%--</div>--%>
-							<%--<div style="margin-top:10px;"><font style="size:12px;color:#777777">${transpond.time}</font></div>--%>
-							<%--<div style="margin-left:650px;margin-top:-25px;">--%>
-								<%--<c:if test="${sessionScope.user.id == transpond.userId}"><input type="button" value="删除" onclick="deleteTranspond(${row.transpond_id})" style="width:50px;border:0px;background-color:#ffffff">&nbsp;&nbsp;</c:if>--%>
-								<%--<input type="button" value="赞(${transpond.agreementnum})" onclick="agreeTranspond('${sessionScope.user.id}',${row.transpond_id},${transpond.agreementnum})" style="width:50px;border:0px;background-color:#ffffff;">--%>
-							<%--</div>--%>
-						<%--</div>--%>
-						<%--<hr style="margin-left:195px;margin-top:20px;width:800px"/>--%>
-					<%--</div>--%>
-        		<%--</c:forEach>--%>
-			<%--</c:forEach>--%>
+			<c:forEach var="transpond" items="${transpond.list}">
+				<div style="margin-top:-180px">
+					<div style="margin-left:200px;">
+						<div style="margin-top:200px"><img src="${transpond.user.avatar}" style="width:60px;height:60px;" /></div>
+						<div style=""><a href="../user_userpage.jsp?id=${transpond.user.id}">${transpond.user.name}</a></div>
+						<div style="margin-left:80px;margin-top:-90px;"><font style="size:12px;color:#777777">转发说：</font>${transpond.transpond.info}</div>
+						<div style="background-color:#f9f9f9;width:700px;margin-left:80px;">
+							<div><a href="user_userpage.jsp?id=${transpond.articleUser.id}">${transpond.articleUser.name}</a></div>
+							<div style="margin-top:5px;"><a href="../article/getArticle.do?id=${transpond.article.id}">${transpond.article.title}</a></div>
+							<div style="margin-top:5px;width:700px;height:100px;overflow-y:auto"><font style="size:6px;color:#777777">${transpond.article.content}</font></div>
+						</div>
+						<div style="margin-top:10px;"><font style="size:12px;color:#777777">${transpond.transpond.time}</font></div>
+						<div style="margin-left:650px;margin-top:-25px;">
+							<c:if test="${transpond.user.id == sessionScope.user.id}"><input type="button" value="删除" onclick="deleteTranspond(${transpond.transpond.id})" style="width:50px;border:0px;background-color:#ffffff">&nbsp;&nbsp;</c:if>
+							<input type="button" value="赞(${transpond.transpond.agreementNum})" onclick="agreeTranspond('${sessionScope.user.id}',${transpond.transpond.id},${transpond.transpond.agreementNum})" style="width:50px;border:0px;background-color:#ffffff;">
+						</div>
+					</div>
+					<hr style="margin-left:195px;margin-top:20px;width:800px"/>
+				</div>
+			</c:forEach>
 		</div>
 	</div>
 	<div class="foot" style="margin-top:30px;margin-left:540px;">
-        <c:if test="${param.method=='mp'}">
-        	<a href="PageServlet?page=1&method=mp">首页</a>
-        	<c:if test="${pageObjective.currentPage>1}">
-       	 		<a href="PageServlet?page=${pageObjective.currentPage-1}&method=mp">上一页</a>
+        <c:if test="${transpond == null}">
+        	<a href="../article/getArticles.do?pn=1">首页</a>
+        	<c:if test="${article.hasPreviousPage == true}">
+       	 		<a href="../article/getArticles.do?pn=${article.pageNum-1}">上一页</a>
     		</c:if>
-    		<c:if test="${pageObjective.currentPage!=pageObjective.totalPage}">
-        		<a href="PageServlet?page=${pageObjective.currentPage+1}&method=mp">下一页</a>
+    		<c:if test="${article.hasNextPage == true}">
+        		<a href="../article/getArticles.do?pn=${article.pageNum+1}">下一页</a>
         	</c:if>
-        	<a href="PageServlet?page=${pageObjective.totalPage}&method=mp">尾页</a>
+        	<a href="../article/getArticles.do?pn=${article.lastPage}">尾页</a>
         </c:if>
-        <c:if test="${param.method=='tp'}">
-        	<a href="PageServlet?page=1&method=tp">首页</a>
-        		<c:if test="${pageTranspond.currentPage>1}">
-       	 			<a href="PageServlet?page=${pageTranspond.currentPage-1}&method=tp">上一页</a>
+        <c:if test="${article == null}">
+        	<a href="../transpond/getTransponds.do?pn=1">首页</a>
+        		<c:if test="${transpond.hasPreviousPage == true}">
+       	 			<a href="../transpond/getTransponds.do?pn=${transpond.pageNum-1}">上一页</a>
     			</c:if>
-    			<c:if test="${pageTranspond.currentPage!=pageTranspond.totalPage}">
-        			<a href="PageServlet?page=${pageTranspond.currentPage+1}&method=tp">下一页</a>
+    			<c:if test="${transpond.hasNextPage == true}">
+        			<a href="../transpond/getTransponds.do?pn=${transpond.pageNum+1}">下一页</a>
         		</c:if>
-        		<a href="PageServlet?page=${pageTranspond.totalPage}&method=tp">尾页</a>
+        		<a href="../transpond/getTransponds.do?pn=${transpond.lastPage}">尾页</a>
         </c:if>
     </div><br><br>
     <div id="mainpage-asize" style="position:fixed;left:1100px;top:50px;width:300px">
@@ -118,7 +111,7 @@
 			</c:if>
 			<c:if test="${sessionScope.user.id==null}">
 				<div style="background-color:#fff6ed;width:180px;margin-top:120px;">
-					<a href="user_login.jsp">还未登陆，点击前往登录</a>
+					<a href="../user_login.jsp">还未登陆，点击前往登录</a>
 				</div>
 			</c:if>
 		</div>

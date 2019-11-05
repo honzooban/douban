@@ -32,4 +32,5 @@ public class Constant {
 
     public static final String TYPE = "type";
 
+    public static final String URL_PREFIX = "E:";
 }

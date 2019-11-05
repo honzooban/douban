@@ -6,12 +6,12 @@ import com.douban.domain.Agree;
 import com.douban.domain.Result;
 import com.douban.domain.User;
 import com.douban.service.AgreeService;
+import com.douban.util.TimeUtil;
 import com.douban.util.ValidateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Timestamp;
 import java.util.Map;
 
 @Service
@@ -31,7 +31,7 @@ public class AgreeServiceImpl implements AgreeService {
             return new Result(400,"请勿重复点赞",null);
         }
         agree.setUserId(user.getId());
-        agree.setTime(new Timestamp(System.currentTimeMillis()));
+        agree.setTime(TimeUtil.createTimestamp());
         return agreeDao.insertAgreeRecord(agree) == 1? new Result(200,"点赞成功",null):
                 new Result(400,"点赞失败，请重试",null);
     }

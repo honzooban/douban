@@ -2,9 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.douban.dao.PictureDao">
   <resultMap id="BaseResultMap" type="com.douban.domain.Picture">
-    <id column="picture_id" jdbcType="INTEGER" property="pictureId" />
-    <result column="picture_url" jdbcType="VARCHAR" property="pictureUrl" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
     <result column="article_id" jdbcType="INTEGER" property="articleId" />
   </resultMap>
 
+
+  <select id="getPictures" resultMap="BaseResultMap">
+    select url from picture where article_id = #{id};
+  </select>
+
+  <delete id="deletePicture">
+    delete from picture where id = #{id};
+  </delete>
 </mapper>

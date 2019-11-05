@@ -2,16 +2,21 @@ package com.douban.dao;
 
 import com.douban.domain.Picture;
 
+import java.util.List;
+
 public interface PictureDao {
-    int deleteByPrimaryKey(Integer pictureId);
 
-    int insert(Picture record);
+    /**
+     * 获取文章附带图片的所有url
+     * @param id 文章id
+     * @return 所有图片的url集合
+     */
+    List<Picture> getPictures(int id);
 
-    int insertSelective(Picture record);
-
-    Picture selectByPrimaryKey(Integer pictureId);
-
-    int updateByPrimaryKeySelective(Picture record);
-
-    int updateByPrimaryKey(Picture record);
+    /**
+     * 删除图片
+     * @param picture 图片信息
+     * @return 删除结果
+     */
+    int deletePicture(Picture picture);
 }

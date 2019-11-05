@@ -15,7 +15,7 @@
     </resultMap>
 
     <resultMap id="UserAndArticleMap" type="com.douban.domain.UserAndArticle">
-      <collection property="user" ofType="com.douban.domain.User">
+      <collection property="user" ofType="com.douban.domain.User" column="user">
           <id column="id" jdbcType="INTEGER" property="id" />
           <result column="name" jdbcType="VARCHAR" property="name" />
           <result column="password" jdbcType="VARCHAR" property="password" />
@@ -26,7 +26,7 @@
           <result column="status" jdbcType="VARCHAR" property="status" />
           <result column="ban_time" jdbcType="VARCHAR" property="banTime" />
       </collection>
-      <collection property="article" ofType="com.douban.domain.Article">
+      <collection property="article" ofType="com.douban.domain.Article" column="article">
           <id column="id" jdbcType="INTEGER" property="id" />
           <result column="title" jdbcType="VARCHAR" property="title" />
           <result column="content" jdbcType="VARCHAR" property="content" />
@@ -40,11 +40,25 @@
       </collection>
     </resultMap>
 
-    <select id="getUserAndArticle" resultMap="UserAndArticleMap">
+    <select id="getArticles" resultMap="UserAndArticleMap">
         select avatar,name,article.id,title,content,type,comment_num,transpond_num,agreement_num from user inner join article
         on user.id = article.user_id
         where user.id in (select id from user) order by article.status desc, article.time desc
     </select>
 
+    <select id="getTranspondArticle" resultMap="UserAndArticleMap">
+        select user.id,name,article.id,title,content from user inner join article inner join transpond
+        on transpond.article_id = article.id and article.user_id = user.id
+        where transpond.id = #{id}
+    </select>
 
+    <select id="getArticle" resultMap="UserAndArticleMap">
+        select user.id,name,avatar,article.id,title,content,time,agreement_num,comment_num,transpond_num from user inner join article
+        on article.user_id = user.id
+        where article.id = #{id};
+    </select>
+
+    <delete id="deleteArticle">
+        delete from article where id = #{id};
+    </delete>
 </mapper>

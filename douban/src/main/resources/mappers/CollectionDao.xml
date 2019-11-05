@@ -2,10 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.douban.dao.CollectionDao">
   <resultMap id="BaseResultMap" type="com.douban.domain.Collection">
-    <id column="collection_id" jdbcType="INTEGER" property="collectionId" />
-    <result column="collection_time" jdbcType="VARCHAR" property="collectionTime" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="article_id" jdbcType="INTEGER" property="articleId" />
   </resultMap>
 
+  <insert id="insertCollection">
+    insert into collection(time,user_id,article_id) values(#{time},#{userId},#{articleId});
+  </insert>
+
+  <select id="selectCollectionById" resultMap="BaseResultMap">
+    select id from collection where user_id = #{userId} and article_id = #{articleId};
+  </select>
 </mapper>

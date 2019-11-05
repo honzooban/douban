@@ -9,9 +9,52 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="article_id" jdbcType="INTEGER" property="articleId" />
   </resultMap>
+  <resultMap id="UserAndArticleMap" type="com.douban.domain.UserAndArticle">
+    <collection property="user" ofType="com.douban.domain.User">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="password" jdbcType="VARCHAR" property="password" />
+      <result column="phone" jdbcType="VARCHAR" property="phone" />
+      <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+      <result column="gender" jdbcType="VARCHAR" property="gender" />
+      <result column="signature" jdbcType="VARCHAR" property="signature" />
+      <result column="status" jdbcType="VARCHAR" property="status" />
+      <result column="ban_time" jdbcType="VARCHAR" property="banTime" />
+    </collection>
+    <collection property="article" ofType="com.douban.domain.Article">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="title" jdbcType="VARCHAR" property="title" />
+      <result column="content" jdbcType="VARCHAR" property="content" />
+      <result column="time" jdbcType="VARCHAR" property="time" />
+      <result column="status" jdbcType="INTEGER" property="status" />
+      <result column="type" jdbcType="VARCHAR" property="type" />
+      <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+      <result column="transpond_num" jdbcType="INTEGER" property="transpondNum" />
+      <result column="agreement_num" jdbcType="INTEGER" property="agreementNum" />
+      <result column="user_id" jdbcType="INTEGER" property="userId" />
+    </collection>
+    <collection property="transpond" ofType="com.douban.domain.Transpond">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="time" jdbcType="TIMESTAMP" property="time" />
+      <result column="info" jdbcType="VARCHAR" property="info" />
+      <result column="agreement_num" jdbcType="INTEGER" property="agreementNum" />
+      <result column="user_id" jdbcType="INTEGER" property="userId" />
+      <result column="article_id" jdbcType="INTEGER" property="articleId" />
+    </collection>
+  </resultMap>
 
   <insert id="insertTranspond">
     insert into transpond(info,time,user_id,article_id) values(#{info},#{time},#{userId},#{articleId});
     update transpond set agreement_num = agreement_num + 1 where article_id = #{articleId}
   </insert>
+
+  <select id="getTranspond" resultMap="UserAndArticleMap">
+    select
+    name,avatar,transpond.id,transpond.user_id,transpond.info,transpond.time,transpond.agreement_num from user inner join transpond
+    on transpond.user_id = user.id order by transpond.id desc
+  </select>
+
+  <delete id="deleteTranspond">
+    delete from transpond where id = #{id}
+  </delete>
 </mapper>

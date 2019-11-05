@@ -10,8 +10,36 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
 
+  <resultMap id="UserAndComment" type="com.douban.domain.UserAndComment">
+    <collection property="user" ofType="com.douban.domain.User">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="password" jdbcType="VARCHAR" property="password" />
+      <result column="phone" jdbcType="VARCHAR" property="phone" />
+      <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+      <result column="gender" jdbcType="VARCHAR" property="gender" />
+      <result column="signature" jdbcType="VARCHAR" property="signature" />
+      <result column="status" jdbcType="VARCHAR" property="status" />
+      <result column="ban_time" jdbcType="VARCHAR" property="banTime" />
+    </collection>
+    <collection property="comment" ofType="com.douban.domain.Comment">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="info" jdbcType="VARCHAR" property="info" />
+      <result column="time" jdbcType="TIMESTAMP" property="time" />
+      <result column="agreement_num" jdbcType="INTEGER" property="agreementNum" />
+      <result column="article_id" jdbcType="INTEGER" property="articleId" />
+      <result column="user_id" jdbcType="INTEGER" property="userId" />
+    </collection>
+  </resultMap>
+
   <insert id="insertComment">
     insert into comment(info,time,article_id,user_id) values(#{info},#{time},#{articleId},#{userId});
     update article set comment_num = comment_num + 1 where id = #{articleId};
   </insert>
+
+  <select id="getComments" resultMap="UserAndComment">
+    select user.id,name,avatar,comment.id,info,time,agreement_num from user inner join comment
+    on comment.user_id = user.id
+    where comment.article_id = #{id}
+  </select>
 </mapper>

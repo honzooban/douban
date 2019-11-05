@@ -168,17 +168,24 @@ function transpondSubmit(uid,aid,flag){
 
 function deleteTranspond(tid){
 	$.ajax({
-		url:"http://localhost:8080/hon/UserServlet?method=deltranspond",
+		url:"http://localhost:8080/douban/transpond/deleteTranspond.do",
 		type:"post",
-		data:{"tid":tid},
-		async: true,
+		data:JSON.stringify({"id":tid}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
-				alert("删除成功");
+			if(msg.code == 200){
+				alert(msg.msg);
 				window.location.reload();
-			}else{
-				alert("删除失败");
-				window.location.reload();
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+				return;
+			}
+			if(msg.code == 404){
+				alert(msg.msg);
+				return;
 			}
 		}
 	});

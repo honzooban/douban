@@ -4,6 +4,7 @@ import com.douban.domain.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @author 93231
@@ -22,5 +23,9 @@ public class ValidateUtil {
         }else{
             return false;
         }
+    }
+
+    public static boolean isProcessSuccess(List list, int count){
+        return count == list.size();
     }
 }

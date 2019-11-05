@@ -5,23 +5,27 @@
  * @param num
  * @returns
  */
-function agreeArticle(uid,id,num){
+function agreeArticle(uid,id){
 	if(uid==""){
 		alert("你目前暂未登录，请前往登录页面进行登录");
-		window.location.href="user_login.jsp";
+		window.location.href="../user_login.jsp";
 		return;
 	}
 	$.ajax({
-		url:"http://localhost:8080/douban/user/login",
+		url:"http://localhost:8080/douban/agree/agreeArticle.do",
 		type:"post",
-		data:{"uid":uid,"id":id,"num":num,"field":"article"},
-		async: true,
+		data:JSON.stringify({"articleId":id}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
+			if(msg.code == 200){
 				window.location.reload();
-			}else{
-				alert("你已点赞过了，请勿重复点赞");
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
 				window.location.reload();
+				return;
 			}
 		}
 	});
@@ -35,7 +39,7 @@ function agreeArticle(uid,id,num){
 function comment(uid){
 	if(uid==""){
 		alert("你目前暂未登录，请前往登录页面进行登录");
-		window.location.href="user_login.jsp";
+		window.location.href="../user_login.jsp";
 		return;
 	}
 	if (document.getElementById('com').style.display=='none'){
@@ -53,7 +57,7 @@ function comment(uid){
 function transpond(uid){
 	if(uid==""){
 		alert("你目前暂未登录，请前往登录页面进行登录");
-		window.location.href="user_login.jsp";
+		window.location.href="../user_login.jsp";
 		return;
 	}
 	if (document.getElementById('tran').style.display=='none'){
@@ -70,20 +74,27 @@ function transpond(uid){
  * @param aid
  * @returns
  */
-function commentSubmit(uid,num,aid){
+function commentSubmit(uid,aid){
 	var comment = $("#commentInfo").val();
 	$.ajax({
-		url:"http://localhost:8080/hon/UserServlet?method=comment",
+		url:"http://localhost:8080/douban/comment/commentArticle.do",
 		type:"post",
-		data:{"uid":uid,"aid":aid,"comment":comment,"num":num},
-		async: true,
+		data:JSON.stringify({"articleId":aid,"info":comment}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
-				alert("评论成功");
+			if(msg.code == 200){
+				alert(msg.msg);
 				window.location.reload();
-			}else{
-				alert("评论失败");
-				window.location.reload();
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+				return;
+			}
+			if(msg.code == 404){
+				alert(msg.msg);
+				return;
 			}
 		}
 	});
@@ -96,20 +107,27 @@ function commentSubmit(uid,num,aid){
  * @param aid
  * @returns
  */
-function transpondSubmit(uid,num,aid){
+function transpondSubmit(uid,aid){
 	var content = $("#transpondInfo").val();
 	$.ajax({
-		url:"http://localhost:8080/hon/UserServlet?method=transpond",
+		url:"http://localhost:8080/douban/transpond/transpondArticle.do",
 		type:"post",
-		data:{"uid":uid,"aid":aid,"num":num,"content":content},
-		async: true,
+		data:JSON.stringify({"articleId":aid,"info":content}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
-				alert("转发成功");
+			if(msg.code == 200){
+				alert(msg.msg);
 				window.location.reload();
-			}else{
-				alert("转发失败");
-				window.location.reload();
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+				return;
+			}
+			if(msg.code == 404){
+				alert(msg.msg);
+				return;
 			}
 		}
 	});
@@ -122,17 +140,21 @@ function transpondSubmit(uid,num,aid){
  */
 function deleteArticle(aid){
 	$.ajax({
-		url:"http://localhost:8080/hon/UserServlet?method=delarticle",
+		url:"http://localhost:8080/douban/article/deleteArticle.do",
 		type:"post",
-		data:{"aid":aid},
-		async: true,
+		data:{"id":aid},
+		data:JSON.stringify({"articleId":aid,"info":content}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
-				alert("删除成功");
-				window.location.href="http://localhost:8080/hon/PageServlet?page=1&method=mp";
-			}else{
-				alert("删除失败");
+			if(msg.code == 200){
+				alert(msg.msg);
 				window.location.reload();
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+				return;
 			}
 		}
 	});
@@ -147,19 +169,24 @@ function deleteArticle(aid){
 function collect(uid,aid){
 	if(uid==""){
 		alert("你目前暂未登录，请前往登录页面进行登录");
-		window.location.href="login.jsp";
+		window.location.href="../login.jsp";
 		return;
 	}
 	$.ajax({
-		url:"http://localhost:8080/hon/UserServlet?method=collection",
+		url:"http://localhost:8080/douban/collection/collectArticle.do",
 		type:"post",
-		data:{"uid":uid,"aid":aid},
-		async: true,
+		data:JSON.stringify({"articleId":aid}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
-				alert("收藏成功");
-			}else{
-				alert("你已收藏该文章，请勿重复收藏");
+			if(msg.code == 200){
+				alert(msg.msg);
+				window.location.reload();
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+				return;
 			}
 		}
 	});
@@ -180,16 +207,20 @@ function agreeComment(uid,cid,num){
 		return;
 	}
 	$.ajax({
-		url:"http://localhost:8080/hon/UserServlet?method=agree",
+		url:"http://localhost:8080/douban/agree/agreeComment.do",
 		type:"post",
-		data:{"uid":uid,"id":cid,"num":num,"field":"comment"},
-		async: true,
+		data:JSON.stringify({"commentId":cid}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
+			if(msg.code == 200){
+				alert(msg.msg);
 				window.location.reload();
-			}else{
-				alert("你已点赞过了，请勿重复点赞");
-				window.location.reload();
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+				return;
 			}
 		}
 	});
