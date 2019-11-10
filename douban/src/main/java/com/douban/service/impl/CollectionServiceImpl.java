@@ -2,6 +2,7 @@ package com.douban.service.impl;
 
 import com.douban.commons.Constant;
 import com.douban.dao.CollectionDao;
+import com.douban.domain.Article;
 import com.douban.domain.Collection;
 import com.douban.domain.Result;
 import com.douban.domain.User;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Service
 public class CollectionServiceImpl implements CollectionService {
@@ -33,5 +35,10 @@ public class CollectionServiceImpl implements CollectionService {
         collection.setUserId(user.getId());
         return collectionDao.insertCollection(collection) == 1? new Result(200,"收藏成功", null) :
                 new Result(400,"收藏失败，请重试",null);
+    }
+
+    @Override
+    public List<Article> getMyCollection(HttpServletRequest request) {
+        return collectionDao.getMyCollection(Integer.parseInt(request.getParameter(Constant.ID)));
     }
 }

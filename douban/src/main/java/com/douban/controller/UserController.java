@@ -1,7 +1,11 @@
 package com.douban.controller;
 
+import com.douban.commons.Constant;
 import com.douban.domain.Result;
 import com.douban.domain.User;
+import com.douban.service.ArticleService;
+import com.douban.service.CollectionService;
+import com.douban.service.RelationService;
 import com.douban.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,6 +26,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private ArticleService articleService;
+    @Autowired
+    private CollectionService collectionService;
+    @Autowired
+    private RelationService relationService;
 
     /**
      * 用户登录
@@ -86,7 +96,7 @@ public class UserController {
     public ModelAndView getHomepageData(HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("user_homepage");
-        mv.addObject("userInfo", userService.getUserInfo(request));
+        mv.addObject("userInfo", userService.getUserInfo(request, null));
         mv.addObject("friends", userService.getFriendsById(request));
         return mv;
     }
@@ -100,7 +110,7 @@ public class UserController {
     public ModelAndView getUpdateInfoData(HttpServletRequest request){
         ModelAndView mv = new ModelAndView();
         mv.setViewName("user_updateinfo");
-        mv.addObject("userInfo",userService.getUserInfo(request));
+        mv.addObject("userInfo",userService.getUserInfo(request, null));
         return mv;
     }
 
@@ -113,5 +123,20 @@ public class UserController {
     @RequestMapping("updateUser")
     public Result updateUserInfo(MultipartFile file, HttpServletRequest request){
         return userService.updateUserInfo(file, request);
+    }
+
+    /**
+     * 获取用户主页及数据
+     * @return
+     */
+    @RequestMapping("getUser")
+    public ModelAndView getUser(HttpServletRequest request){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("user_userpage");
+        mv.addObject("user",userService.getUserInfo(null, Integer.parseInt(request.getParameter(Constant.ID))));
+        mv.addObject("relation",relationService.getRelation(request));
+        mv.addObject("myArticle",articleService.getMyArticle(request));
+        mv.addObject("myCollection",collectionService.getMyCollection(request));
+        return mv;
     }
 }

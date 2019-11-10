@@ -9,6 +9,13 @@ public class Picture {
 
     private Integer articleId;
 
+    public Picture(String url, Integer articleId) {
+        this.url = url;
+        this.articleId = articleId;
+    }
+
+    public Picture(){}
+
     public Integer getId() {
         return id;
     }

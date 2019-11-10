@@ -1,17 +1,30 @@
 package com.douban.dao;
 
 import com.douban.domain.Relation;
+import org.apache.ibatis.annotations.Param;
 
 public interface RelationDao {
-    int deleteByPrimaryKey(Integer relationId);
 
-    int insert(Relation record);
+    /**
+     * 获取两用户间关系
+     * @param id 用户id
+     * @param byId 用户id
+     * @return 两用户间关系
+     */
+    Relation getRelation(@Param("id") int id, @Param("byId") int byId);
 
-    int insertSelective(Relation record);
+    /**
+     * 修改好友分组
+     * @param relation 好友关系数据
+     * @return 修改结果
+     */
+    int updateRelationType(Relation relation);
 
-    Relation selectByPrimaryKey(Integer relationId);
+    /**
+     * 添加好友功能
+     * @param relation 用户关系数据
+     * @return 添加结果
+     */
+    int insertRelationStatus(Relation relation);
 
-    int updateByPrimaryKeySelective(Relation record);
-
-    int updateByPrimaryKey(Relation record);
 }

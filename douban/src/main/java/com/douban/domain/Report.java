@@ -1,38 +1,40 @@
 package com.douban.domain;
 
+import java.sql.Timestamp;
+
 public class Report {
-    private Integer reportId;
+    private Integer id;
 
-    private String reportContent;
+    private String content;
 
-    private String reportTime;
+    private Timestamp time;
 
     private Integer userId;
 
-    private Integer userByid;
+    private Integer userById;
 
-    public Integer getReportId() {
-        return reportId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setReportId(Integer reportId) {
-        this.reportId = reportId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getReportContent() {
-        return reportContent;
+    public String getContent() {
+        return content;
     }
 
-    public void setReportContent(String reportContent) {
-        this.reportContent = reportContent == null ? null : reportContent.trim();
+    public void setContent(String content) {
+        this.content = content;
     }
 
-    public String getReportTime() {
-        return reportTime;
+    public Timestamp getTime() {
+        return time;
     }
 
-    public void setReportTime(String reportTime) {
-        this.reportTime = reportTime == null ? null : reportTime.trim();
+    public void setTime(Timestamp time) {
+        this.time = time;
     }
 
     public Integer getUserId() {
@@ -43,11 +45,11 @@ public class Report {
         this.userId = userId;
     }
 
-    public Integer getUserByid() {
-        return userByid;
+    public Integer getUserById() {
+        return userById;
     }
 
-    public void setUserByid(Integer userByid) {
-        this.userByid = userByid;
+    public void setUserById(Integer userById) {
+        this.userById = userById;
     }
 }

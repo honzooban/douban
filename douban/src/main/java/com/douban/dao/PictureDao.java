@@ -19,4 +19,11 @@ public interface PictureDao {
      * @return 删除结果
      */
     int deletePicture(Picture picture);
+
+    /**
+     * 新增图片
+     * @param picture 图片信息
+     * @return 新增结果
+     */
+    int insertPicture(Picture picture);
 }

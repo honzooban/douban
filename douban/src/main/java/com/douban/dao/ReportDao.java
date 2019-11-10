@@ -3,15 +3,12 @@ package com.douban.dao;
 import com.douban.domain.Report;
 
 public interface ReportDao {
-    int deleteByPrimaryKey(Integer reportId);
 
-    int insert(Report record);
+    /**
+     * 添加举报内容
+     * @param report 举报数据
+     * @return 添加结果
+     */
+    int insertReport(Report report);
 
-    int insertSelective(Report record);
-
-    Report selectByPrimaryKey(Integer reportId);
-
-    int updateByPrimaryKeySelective(Report record);
-
-    int updateByPrimaryKey(Report record);
 }

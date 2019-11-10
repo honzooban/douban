@@ -5,7 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="content" jdbcType="VARCHAR" property="content" />
-    <result column="time" jdbcType="VARCHAR" property="time" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="status" jdbcType="INTEGER" property="status" />
     <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
@@ -24,13 +24,13 @@
           <result column="gender" jdbcType="VARCHAR" property="gender" />
           <result column="signature" jdbcType="VARCHAR" property="signature" />
           <result column="status" jdbcType="VARCHAR" property="status" />
-          <result column="ban_time" jdbcType="VARCHAR" property="banTime" />
+          <result column="ban_time" jdbcType="TIMESTAMP" property="banTime" />
       </collection>
       <collection property="article" ofType="com.douban.domain.Article" column="article">
           <id column="id" jdbcType="INTEGER" property="id" />
           <result column="title" jdbcType="VARCHAR" property="title" />
           <result column="content" jdbcType="VARCHAR" property="content" />
-          <result column="time" jdbcType="VARCHAR" property="time" />
+          <result column="time" jdbcType="TIMESTAMP" property="time" />
           <result column="status" jdbcType="INTEGER" property="status" />
           <result column="type" jdbcType="VARCHAR" property="type" />
           <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
@@ -61,4 +61,12 @@
     <delete id="deleteArticle">
         delete from article where id = #{id};
     </delete>
+
+    <insert id="publishArticle" useGeneratedKeys="true" keyProperty="id">
+        insert into article(title,content,type,time,user_id) values(#{title},#{content},#{type},#{time},#{userId});
+    </insert>
+
+    <select id="getMyArticle" resultMap="BaseResultMap">
+        select id,title,content,article.time from article where user_id = #{id} order by article.time desc limit 0,2;
+    </select>
 </mapper>

@@ -4,32 +4,30 @@
  * @param aid
  * @returns
  */
-function publishArticle(uid,aid){
+function publishArticle(id){
 	var form = new FormData(document.getElementById("article"));
-	form.append("uid",uid);
 	form.append("title",$("#title").val());
 	form.append("content",$("#content").html());
-	form.append("type",$("#classes option:selected").val())
-	form.append("aid",aid)
+	form.append("type",$("#classes option:selected").val());
+	form.append("id",id);
 	$.ajax({
-		url:"http://localhost:8080/hon/UpLoadServlet?method=article",
+		url:"http://localhost:8080/douban/article/publishArticle.do",
 		type:"post",
 		data: form,
-	    processData: false,
-	    contentType: false,
+		cache: false,
+		processData: false,
+		contentType: false,
 	    beforeSend:function(){
 			$("#publish").val("发布中");
 		},
-	    success: function(msg) {
-	        if(msg="true"){
-	            alert("发布成功");
-	            window.location.href="http://localhost:8080/hon/PageServlet?page=1&method=mp";
-	            }else{
-	               alert("发布失败");
-	            }
-	        },
-	    error: function(e) {
-	        console.log(e);
-	    }
+		success: function(msg) {
+			if(msg.code == 200){
+				alert(msg.msg);
+				window.location.href="../article/getArticles.do";
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+			}
+		}
 	});
 }

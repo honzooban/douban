@@ -37,7 +37,6 @@ public class TranspondServiceImpl implements TranspondService {
         transpond.setTime(TimeUtil.createTimestamp());
         return transpondDao.insertTranspond(transpond) == 1 ? new Result(200,"转发成功",null) :
                 new Result(400,"转发失败，请重试",null);
-
     }
 
     @Override

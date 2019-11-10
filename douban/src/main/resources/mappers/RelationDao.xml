@@ -2,11 +2,23 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.douban.dao.RelationDao">
   <resultMap id="BaseResultMap" type="com.douban.domain.Relation">
-    <id column="relation_id" jdbcType="INTEGER" property="relationId" />
-    <result column="relation_type" jdbcType="VARCHAR" property="relationType" />
-    <result column="relation_status" jdbcType="VARCHAR" property="relationStatus" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="user_byid" jdbcType="INTEGER" property="userByid" />
   </resultMap>
 
+  <select id="getRelation" resultMap="BaseResultMap">
+    select type,status from relation where user_id = #{id} and user_byid = #{byId};
+  </select>
+
+  <update id="updateRelationType">
+    update relation set type = #{type} where user_id in (#{userId},#{userById}) and user_byid in (#{userId},#{userById})
+  </update>
+
+  <insert id="insertRelationStatus" >
+    insert into relation (status,user_id,user_byid) values (1,#{userId},#{userById});
+    insert into relation (status,user_id,user_byid) values (1,#{userById},#{userId});
+  </insert>
 </mapper>

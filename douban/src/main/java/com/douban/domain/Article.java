@@ -1,5 +1,8 @@
 package com.douban.domain;
 
+import java.sql.Timestamp;
+import java.util.List;
+
 public class Article {
     private Integer id;
 
@@ -7,7 +10,7 @@ public class Article {
 
     private String content;
 
-    private String time;
+    private Timestamp time;
 
     private Integer status;
 
@@ -20,6 +23,36 @@ public class Article {
     private Integer agreementNum;
 
     private Integer userId;
+
+    private List<Picture> pictures;
+
+    public List<Picture> getPictures() {
+        return pictures;
+    }
+
+    public void setPictures(List<Picture> pictures) {
+        this.pictures = pictures;
+    }
+
+    public Article(){}
+
+    public Article(Integer id) {
+        this.id = id;
+    }
+
+    public Article(Integer id, String title, String content) {
+        this.id = id;
+        this.title = title;
+        this.content = content;
+    }
+
+    public Article(String title, String content, Timestamp time, String type, Integer userId) {
+        this.title = title;
+        this.content = content;
+        this.time = time;
+        this.type = type;
+        this.userId = userId;
+    }
 
     public Integer getId() {
         return id;
@@ -45,11 +78,11 @@ public class Article {
         this.content = content;
     }
 
-    public String getTime() {
+    public Timestamp getTime() {
         return time;
     }
 
-    public void setTime(String time) {
+    public void setTime(Timestamp time) {
         this.time = time;
     }
 

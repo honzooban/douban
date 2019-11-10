@@ -58,9 +58,10 @@ public interface UserService {
     /**
      * 获取用户的个人信息
      * @param request
+     * @param id 用户id
      * @return 用户信息
      */
-    User getUserInfo(HttpServletRequest request);
+    User getUserInfo(HttpServletRequest request, Integer id);
 
     /**
      * 获取用户好友名单
@@ -71,7 +72,8 @@ public interface UserService {
 
     /**
      * 修改用户个人资料
-     * @param user 用户信息
+     * @param file 用户头像
+     * @param request
      * @return 修改结果
      */
     Result updateUserInfo(MultipartFile file, HttpServletRequest request);

@@ -1,14 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>豆瓣-用户主页</title>
-    <link rel="stylesheet" type="text/css" href="./css/homepage.css">
-    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script type="text/javascript" src="./js/userpage.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/homepage.css">
+    <script src="../js/jquery-3.4.0.min.js"></script>
+    <script type="text/javascript" src="../js/userpage.js"></script>
   </head>
 <body>
 	<div class="top-line">
@@ -32,40 +31,23 @@
 		</div>
 	</div>
 	<div>
-		<sql:query dataSource="${snapshot}" var="result">
-   			select user_name,user_pic,user_signature from user where user_id = ?;
-   			<sql:param value="${param.id}" />
-   		</sql:query>
-   		 <c:forEach var="row" items="${result.rows}">
-   		 	<c:set var="name" value="${row.user_name}" />
-   		 	<c:set var="pic" value="${row.user_pic}" />
-   		 	<div style="position:absolute;margin-top:50px;margin-left:20px;">
-               <img src="${row.user_pic}" width="50px;" height="50px;">
-            </div>
-              <div class="signature" style="position:absolute;margin-top:20px;margin-left:82px;">
-                <h1>${name}</h1>
-                <div style="position:absolute;margin-top:-36px;">
-                  <p style="color:#777777;white-space:nowrap;"><c:if test="${row.user_signature!=''}"><c:out value="${row.user_signature}" /></c:if><c:if test="${row.user_signature == ''}">(个性签名)</c:if></p>
-                </div>
-              </div>
-   		 </c:forEach>
+		<div style="position:absolute;margin-top:50px;margin-left:20px;">
+		   <img src="${user.avatar}" width="50px;" height="50px;">
+		</div>
+		<div class="signature" style="position:absolute;margin-top:20px;margin-left:82px;">
+			<h1>${user.name}</h1>
+			<div style="position:absolute;margin-top:-36px;">
+			  <p style="color:#777777;white-space:nowrap;"><c:if test="${user.signature != ''}"><c:out value="${user.signature}" /></c:if><c:if test="${user.signature == ''}">(个性签名)</c:if></p>
+			</div>
+		</div>
 	</div>
 	<div style="width:320px;height:293.6px;background-color:#fff6ed;margin-top:50px;margin-left:1100px;">
-		<div><img src="${pic}" style="width:160px;height:158px;margin-top:10px;margin-left:10px;"></div>
+		<div><img src="${user.avatar}" style="width:160px;height:158px;margin-top:10px;margin-left:10px;"></div>
 		<c:if test="${sessionScope.user.id!=null}">
 		<div>
-			<sql:query dataSource="${snapshot}" var="result">
-   				select relation_type,relation_status from relation where user_id in (?,?) and user_byid in (?,?);
-   				<sql:param value="${sessionScope.user.id}" />
-   				<sql:param value="${param.id}" />
-   				<sql:param value="${sessionScope.user.id}" />
-   				<sql:param value="${param.id}" />
-   			</sql:query>
-   			<c:forEach var="row" items="${result.rows}">
-   				<c:set var="relaitonStatus" value="${row.relation_status}"/>
-   				<c:set var="relaitonType" value="${row.relation_type}"/>
-   			</c:forEach>
-   			<c:if test="${empty result.rows}">
+			<c:set var="relaitonStatus" value="${relation.status}"/>
+			<c:set var="relaitonType" value="${relation.type}"/>
+   			<c:if test="${empty relation}">
    				<div style="float:left;margin-right:20px;margin-left:15px"><input type="button" value="添加好友" onclick="addFriend('${sessionScope.user.id}',${param.id})" style="background-color:#fff3e7;border:1px solid #e8ccb2;width:70px;"></div>
    				<div style="margin-top:20px"><input type="button" value="发豆邮" onclick="javascript:window.location.href='user_doumail.jsp?uid=${sessionScope.user.id}&ubyid=${param.id}&name=${name}'" style="background-color:#fff3e7;border:1px solid #e8ccb2;width:70px;"></div>
    			</c:if>
@@ -91,29 +73,21 @@
 	</div>
 	<div style="margin-top:-200px;margin-left:30px;width:500px">
 		<div><font style="color:#007722"><b>我的文章</b></font>&nbsp;&nbsp;·&nbsp;&nbsp;·&nbsp;&nbsp;·&nbsp;&nbsp;·&nbsp;&nbsp;·&nbsp;&nbsp;·&nbsp;&nbsp;<a href="myarticle.jsp?id=${param.id}" class="items" style="color:#666699">全部</a></div>
-		<sql:query dataSource="${snapshot}" var="result">
-   			select article.article_id,article_title,article_content,article_time from article where user_id = ? ORDER BY article_time DESC limit 0,2;
-   			<sql:param value="${param.id}" />
-   		</sql:query>
    		<div style="margin-top:20px;">
-   			<c:forEach var="row" items="${result.rows}">
-   				<div><a href="user_article.jsp?aid=${row.article_id}"><font style="size:16px;color:#3377aa;">${row.article_title}</font></a></div>
-   				<div><font style="size:12px;color:#777777;">${row.article_time}</font></div>
-   				<div style="height:62px;overflow-y:auto">${row.article_content}</div><br>
-   			</c:forEach>
+			<c:forEach var="myArticle" items="${myArticle}">
+				<div><a href="../article/getArticle.do?id=${myArticle.id}"><font style="size:16px;color:#3377aa;">${myArticle.title}</font></a></div>
+				<div><font style="size:12px;color:#777777;">${myArticle.time}</font></div>
+				<div style="height:62px;overflow-y:auto">${myArticle.content}</div><br>
+			</c:forEach>
    		</div>
 	</div><br>
 	<div style="margin-left:30px;width:500px">
 		<div><font style="color:#007722"><b>我的收藏</b></font>&nbsp;&nbsp;·&nbsp;&nbsp;·&nbsp;&nbsp;·&nbsp;&nbsp;·&nbsp;&nbsp;·&nbsp;&nbsp;·&nbsp;&nbsp;<a href="mycollection.jsp?id=${param.id}" class="items" style="color:#666699">全部</a></div>
-		<sql:query dataSource="${snapshot}" var="result">
-   			SELECT article.article_id,article_title,article_content,article_time FROM article INNER JOIN collection ON collection.`user_id` = ? AND collection.`article_id` = article.`article_id` ORDER BY article_time DESC limit 0,2;
-   			<sql:param value="${param.id}" />
-   		</sql:query>
    		<div style="margin-top:20px;">
-   			<c:forEach var="row" items="${result.rows}">
-   				<div><a href="article.jsp?aid=${row.article_id}"><font style="size:16px;color:#3377aa;">${row.article_title}</font></a></div>
-   				<div><font style="size:12px;color:#777777;">${row.article_time}</font></div>
-   				<div style="height:62px;overflow:hidden">${row.article_content}</div><br>
+   			<c:forEach var="myCollection" items="${myCollection}">
+   				<div><a href="article.jsp?aid=${myCollection.id}"><font style="size:16px;color:#3377aa;">${myCollection.title}</font></a></div>
+   				<div><font style="size:12px;color:#777777;">${myCollection.time}</font></div>
+   				<div style="height:62px;overflow:hidden">${myCollection.content}</div><br>
    			</c:forEach>
    		</div>
 	</div>

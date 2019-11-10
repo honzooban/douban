@@ -54,7 +54,7 @@ public class TranspondController {
         mv.setViewName("user_mainpage");
         mv.addObject("transpond", transpondService.getTranspond(pn));
         if(ValidateUtil.isSessionExist(request, Constant.USER)) {
-            mv.addObject("userInfo", userService.getUserInfo(request));
+            mv.addObject("userInfo", userService.getUserInfo(request, null));
         }
         return mv;
     }

@@ -142,14 +142,13 @@ function deleteArticle(aid){
 	$.ajax({
 		url:"http://localhost:8080/douban/article/deleteArticle.do",
 		type:"post",
-		data:{"id":aid},
-		data:JSON.stringify({"articleId":aid,"info":content}),
+		data:JSON.stringify({"id":aid}),
 		contentType:"application/json;charset=utf-8",
 		dataType:"json",
 		success:function(msg){
 			if(msg.code == 200){
 				alert(msg.msg);
-				window.location.reload();
+				window.location.href = "../article/getArticles.do";
 				return;
 			}
 			if(msg.code == 400){
@@ -234,3 +233,4 @@ function search(){
 	var message = document.getElementById('searchtext').value;
 	window.location.href="PageServlet?message="+message+"&method=search";
 }
+

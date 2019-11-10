@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +42,7 @@ public class ArticleController {
         mv.setViewName("user_mainpage");
         mv.addObject("article", articleService.getArticles(pn));
         if(ValidateUtil.isSessionExist(request, Constant.USER)) {
-            mv.addObject("userInfo", userService.getUserInfo(request));
+            mv.addObject("userInfo", userService.getUserInfo(request, null));
         }
         return mv;
     }
@@ -57,7 +58,6 @@ public class ArticleController {
         mv.setViewName("user_article");
         int id = Integer.parseInt(request.getParameter(Constant.ID));
         mv.addObject("article",articleService.getArticle(id));
-        mv.addObject("pictures",articleService.getPictures(id));
         mv.addObject("comments",articleService.getComments(id));
         return mv;
     }
@@ -72,4 +72,40 @@ public class ArticleController {
         return articleService.deleteArticle(article);
     }
 
+    /**
+     * 跳转文章编辑页面
+     * @return
+     */
+    @RequestMapping("publishArticlePage")
+    public ModelAndView getPublishArticlePage(){
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("user_publish_article");
+        return mv;
+    }
+
+    /**
+     * 编辑文章
+     * @param request
+     * @return 编辑文章页面及数据
+     */
+    @RequestMapping("editArticle")
+    public ModelAndView editArticle(HttpServletRequest request){
+        Article article = new Article(Integer.parseInt(request.getParameter(Constant.ID)),
+                request.getParameter(Constant.TITLE), request.getParameter(Constant.CONTENT));
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("article",article);
+        mv.setViewName("user_publish_article");
+        return mv;
+    }
+
+    /**
+     * 发表文章
+     * @param images 图片数组
+     * @param request
+     * @return 发表结果
+     */
+    @RequestMapping("publishArticle")
+    public Result publishArticle(MultipartFile[] images,HttpServletRequest request){
+        return articleService.publishArticle(images, request);
+    }
 }

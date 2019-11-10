@@ -1,38 +1,38 @@
 package com.douban.domain;
 
 public class Relation {
-    private Integer relationId;
+    private Integer id;
 
-    private String relationType;
+    private String type;
 
-    private String relationStatus;
+    private String status;
 
     private Integer userId;
 
-    private Integer userByid;
+    private Integer userById;
 
-    public Integer getRelationId() {
-        return relationId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setRelationId(Integer relationId) {
-        this.relationId = relationId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getRelationType() {
-        return relationType;
+    public String getType() {
+        return type;
     }
 
-    public void setRelationType(String relationType) {
-        this.relationType = relationType == null ? null : relationType.trim();
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public String getRelationStatus() {
-        return relationStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setRelationStatus(String relationStatus) {
-        this.relationStatus = relationStatus == null ? null : relationStatus.trim();
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Integer getUserId() {
@@ -43,11 +43,11 @@ public class Relation {
         this.userId = userId;
     }
 
-    public Integer getUserByid() {
-        return userByid;
+    public Integer getUserById() {
+        return userById;
     }
 
-    public void setUserByid(Integer userByid) {
-        this.userByid = userByid;
+    public void setUserById(Integer userById) {
+        this.userById = userById;
     }
 }

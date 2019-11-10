@@ -1,50 +1,50 @@
 package com.douban.domain;
 
-import java.util.Date;
+import java.sql.Timestamp;
 
 public class Privateletter {
-    private Integer privateletterId;
+    private Integer id;
 
-    private String privateletterInfo;
+    private String info;
 
-    private String privateletterInfostatus;
+    private String status;
 
-    private Date privateletterTime;
+    private Timestamp time;
 
     private Integer userId;
 
-    private Integer userByid;
+    private Integer userById;
 
-    public Integer getPrivateletterId() {
-        return privateletterId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setPrivateletterId(Integer privateletterId) {
-        this.privateletterId = privateletterId;
+    public void setId(Integer id) {
+        this.id = id;
     }
 
-    public String getPrivateletterInfo() {
-        return privateletterInfo;
+    public String getInfo() {
+        return info;
     }
 
-    public void setPrivateletterInfo(String privateletterInfo) {
-        this.privateletterInfo = privateletterInfo == null ? null : privateletterInfo.trim();
+    public void setInfo(String info) {
+        this.info = info;
     }
 
-    public String getPrivateletterInfostatus() {
-        return privateletterInfostatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setPrivateletterInfostatus(String privateletterInfostatus) {
-        this.privateletterInfostatus = privateletterInfostatus == null ? null : privateletterInfostatus.trim();
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public Date getPrivateletterTime() {
-        return privateletterTime;
+    public Timestamp getTime() {
+        return time;
     }
 
-    public void setPrivateletterTime(Date privateletterTime) {
-        this.privateletterTime = privateletterTime;
+    public void setTime(Timestamp time) {
+        this.time = time;
     }
 
     public Integer getUserId() {
@@ -55,11 +55,11 @@ public class Privateletter {
         this.userId = userId;
     }
 
-    public Integer getUserByid() {
-        return userByid;
+    public Integer getUserById() {
+        return userById;
     }
 
-    public void setUserByid(Integer userByid) {
-        this.userByid = userByid;
+    public void setUserById(Integer userById) {
+        this.userById = userById;
     }
 }

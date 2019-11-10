@@ -1,15 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>豆瓣-豆邮</title>
-    <link rel="stylesheet" type="text/css" href="./css/homepage.css">
-    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-    <script type="text/javascript" src="./js/doumail.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/homepage.css">
+    <script src="../js/jquery-3.4.0.min.js"></script>
+    <script type="text/javascript" src="../js/doumail.js"></script>
 </head>
 <body>
 	<div class="top-line">
@@ -33,36 +31,22 @@
 		</div>
 	</div>
 	<div id="doumial-mid" style="margin-left:350px;margin-top:40px;">
-		<sql:query dataSource="${snapshot}" var="result">
-			SELECT user_name,user_pic,privateletter_info,privateletter_time FROM USER INNER JOIN privateletter ON user.`user_id` IN (?,?) AND privateletter.`user_byid` IN (?,?) AND privateletter.`user_id` = user.`user_id` ORDER BY privateletter.`privateletter_time`;
-			<sql:param value="${param.uid}"/>
-			<sql:param value="${param.ubyid}"/>
-			<sql:param value="${param.uid}"/>
-			<sql:param value="${param.ubyid}"/>
-		</sql:query>
 		<h2>与${param.name}的豆邮</h2>
 		<div style="margin-top:-30px;overflow-y:auto;width:650px">
-		<c:forEach var="row" items="${result.rows}">
+		<c:forEach var="row" items="${privateletter}">
         	<div style="margin-top:50px;">
         		<hr style="width:550px;margin-left:0px;margin-bottom:-10px;"/><br/>
-        		<img src="${row.user_pic}" style="width:50px;height:50px;"><br/>
-        		<div style="margin-top:-70px;margin-left:60px;"><p>${row.user_name}</p></div>
-        		<div style="margin-top:-10px;margin-left:60px;"><p>${row.privateletter_info}</p></div>
-        		<div style="margin-left:500px;margin-top:-70px;"><p><fmt:formatDate type="time" value="${row.privateletter_time}" /></p></div>
+        		<img src="${row.user.avatar}" style="width:50px;height:50px;"><br/>
+        		<div style="margin-top:-70px;margin-left:60px;"><p>${row.user.name}</p></div>
+        		<div style="margin-top:-10px;margin-left:60px;"><p>${row.privateletter.info}</p></div>
+        		<div style="margin-left:500px;margin-top:-70px;"><p>${row.privateletter.time}</p></div>
         	</div>
         </c:forEach>
         </div>
 		<div style="margin-top:40px;">
 			<textarea rows="10" cols="80" autocomplete="off" id="doumail" style="resize: none;width:550px;height:150px;"></textarea>
 		</div>
-		<sql:query dataSource="${snapshot}" var="result">
-			select relation_status from relation where user_id in (?,?) and user_byid in (?,?);
-			<sql:param value="${param.uid}" />
-			<sql:param value="${param.ubyid}" />
-			<sql:param value="${param.uid}" />
-			<sql:param value="${param.ubyid}" />
-		</sql:query>
-		<c:forEach var="row" items="${result.rows}"><c:set var="relation" value="${row.relation_status}"/></c:forEach>
+		<c:set var="relation" value="${relation.status}"/>
 		<div style="margin-top:20px;margin-left:470px;">
 			<input type="button" value="发送豆邮" onclick="send('${relation}',${param.uid},${param.ubyid})" id="sendmail" class="mf-btn" />
 		</div>

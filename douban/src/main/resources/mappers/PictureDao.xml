@@ -15,4 +15,8 @@
   <delete id="deletePicture">
     delete from picture where id = #{id};
   </delete>
+
+  <insert id="insertPicture">
+    insert into picture(url,article_id) values(#{url},#{articleId});
+  </insert>
 </mapper>

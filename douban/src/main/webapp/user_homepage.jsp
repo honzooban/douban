@@ -55,7 +55,7 @@
               <a href="user_myarticle.jsp?id=${userInfo.id}" class="items" style="color:#666699">全部</a>
             </div>
             <div class="write" style="margin-left:500px;margin-top:-19px;background-color:#fcf7f3; border:1px solid #f3e7e0">
-              <a href="user_publish_article.jsp?aid=0" style="color:#777777">+写文章&nbsp;</a>
+              <a href="../article/publishArticlePage.do" style="color:#777777">+写文章&nbsp;</a>
             </div>
             <div>
               <p style="font-size:13px;margin-left:1px;white-space:nowrap;">在豆瓣上写文章，记录自己的生活、想法。</p>

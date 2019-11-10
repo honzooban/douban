@@ -50,4 +50,18 @@ public interface UserDao {
      * @return 修改结果
      */
     int updateUserInfo(User user);
+
+    /**
+     * 根据用户id来获取用户信息
+     * @param id 用户id
+     * @return 用户信息
+     */
+    User selectUserById(int id);
+
+    /**
+     * 获取私信页面的用户信息
+     * @param user 用户信息
+     * @return 用户信息
+     */
+    List<User> selectPrivateletterUser(User user);
 }

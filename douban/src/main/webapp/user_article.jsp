@@ -34,11 +34,11 @@
     <div id="article" style="width:1100px;">
 		 <div style="margin-top:50px;margin-left:200px;"><h2>${article.article.title}</h2></div>
 		 <div style="margin-top:10px;margin-left:200px;"><img src="${article.user.avatar}" style="width:50px;height:50px;"></div>
-		 <div style="margin-top:-35px;margin-left:260px;"><a href="user_userpage.jsp?id=${article.user.id}">${article.user.name}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#777777">${article.article.time}</font></div>
+		 <div style="margin-top:-35px;margin-left:260px;"><a href="../user/getUser.do?id=${article.user.id}">${article.user.name}</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<font color="#777777">${article.article.time}</font></div>
 		  <div style="margin-top:-20px;margin-left:1000px;"><input type="button" style="border:1px solid #e2f1e7;background-color:#eff7ed;width:70px;" value="收藏" onclick="collect('${sessionScope.user.id}',${param.id})"></div>
 		 <div style="margin-top:20px;margin-left:200px;"><p>${article.article.content}</p></div>
 		 <div style="margin-left:200px;margin-top:30px;">
-		 	<c:forEach var="picture" items="${pictures}">
+		 	<c:forEach var="picture" items="${article.article.pictures}">
 				<div style="display:inline"><img src="${picture.url}" style="width:150px;height:150px"></div>
 			</c:forEach>
 		 </div>
@@ -55,7 +55,7 @@
 		 <c:if test="${sessionScope.user.id == id}">
 		 <div style="margin-top:40px;margin-left:710px;">
 			 <!--这里改用在控制层写一个接口来进行文章编辑-->
-			<a href='user_publish_article.jsp?title=${article.article.title}&content=${article.article.content}&aid=${param.id}'>编辑</a>&nbsp;&nbsp;
+			<a href='../article/editArticle.do?title=${article.article.title}&content=${article.article.content}&id=${param.id}'>编辑</a>&nbsp;&nbsp;
 			<input type="button" style="border:1px solid #e2f1e7;background-color:#eff7ed;width:70px;" value="删除文章" onclick="deleteArticle(${param.id})">&nbsp;&nbsp;
 			<input type="button" style="border:1px solid #ca6445;background-color:#fbe9d9;width:70px;" value="赞(${article.article.agreementNum})" onclick="agreeArticle('${sessionScope.user.id}',${param.id})">&nbsp;&nbsp;
 			<input type="button" style="border:1px solid #e2f1e7;background-color:#eff7ed;width:70px;" value="评论(${article.article.commentNum})" onclick="comment('${sessionScope.user.id}',${param.id})" />&nbsp;&nbsp;

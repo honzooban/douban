@@ -2,7 +2,9 @@ package com.douban.service;
 
 import com.douban.domain.*;
 import com.github.pagehelper.PageInfo;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -47,4 +49,19 @@ public interface ArticleService {
      * @return 删除结果
      */
     Result deleteArticle(Article article);
+
+    /**
+     * 发表文章
+     * @param images 文章图片
+     * @param request
+     * @return 发表结果
+     */
+    Result publishArticle(MultipartFile[] images, HttpServletRequest request);
+
+    /**
+     * 获取我的文章
+     * @param request 用户id
+     * @return 文章数据
+     */
+    List<Article> getMyArticle(HttpServletRequest request);
 }

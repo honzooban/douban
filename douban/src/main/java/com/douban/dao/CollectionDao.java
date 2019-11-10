@@ -1,6 +1,9 @@
 package com.douban.dao;
 
+import com.douban.domain.Article;
 import com.douban.domain.Collection;
+
+import java.util.List;
 
 public interface CollectionDao {
 
@@ -17,4 +20,11 @@ public interface CollectionDao {
      * @return 收藏记录
      */
     Collection selectCollectionById(Collection collection);
+
+    /**
+     * 获取我的收藏
+     * @param id 用户id
+     * @return 收藏文章数据
+     */
+    List<Article> getMyCollection(int id);
 }

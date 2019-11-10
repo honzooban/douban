@@ -2,11 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.douban.dao.ReportDao">
   <resultMap id="BaseResultMap" type="com.douban.domain.Report">
-    <id column="report_id" jdbcType="INTEGER" property="reportId" />
-    <result column="report_content" jdbcType="VARCHAR" property="reportContent" />
-    <result column="report_time" jdbcType="VARCHAR" property="reportTime" />
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="user_byid" jdbcType="INTEGER" property="userByid" />
   </resultMap>
+
+  <insert id="insertReport">
+    insert into report (content,time,user_id,user_byid) values (#{content},#{time},#{userId},#{userById});
+  </insert>
 
 </mapper>

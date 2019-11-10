@@ -18,17 +18,21 @@ function show(){
  */
 function addType(uid,ubyid){
 	$.ajax({
-		url:"http://localhost:8080/hon/FriendServlet?method=addRelationType",
+		url:"http://localhost:8080/douban/relation/updateRelation.do",
 		type:"post",
-		data:{"userId":uid,"userById":ubyid,"type":$("#typevalue").val()},
-		async: true,
+		data:JSON.stringify({"userId":uid,"userById":ubyid,"type":$("#typevalue").val()}),
+        contentType:"application/json;charset=utf-8",
+        dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
-				alert("添加分组成功");
+			if(msg.code == 200){
+				alert(msg.msg);
 				window.location.reload();
-			}else{
-				alert("添加分组失败");
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
 				window.location.reload();
+				return;
 			}
 		}
 	});
@@ -47,19 +51,23 @@ function addFriend(uid,ubyid){
 		return;
 	}
 	$.ajax({
-		url:"http://localhost:8080/hon/FriendServlet?method=addFriend",
+		url:"http://localhost:8080/douban/relation/addFriend.do",
 		type:"post",
-		data:{"userId":uid,"userById":ubyid},
-		async: true,
-		success:function(msg){
-			if(msg=="true"){
-				alert("添加好友成功");
-				window.location.reload();
-			}else{
-				alert("添加好友失败");
-				window.location.reload();
-			}
-		}
+		data:JSON.stringify({"userId":uid,"userById":ubyid}),
+        contentType:"application/json;charset=utf-8",
+        dataType:"json",
+        success:function(msg){
+            if(msg.code == 200){
+                alert(msg.msg);
+                window.location.reload();
+                return;
+            }
+            if(msg.code == 400){
+                alert(msg.msg);
+                window.location.reload();
+                return;
+            }
+        }
 	});
 	
 }
@@ -71,7 +79,7 @@ function addFriend(uid,ubyid){
 function sendDouMail(){
 	if(uid==""){
 		alert("你目前暂未登录，请前往登录页面进行登录");
-		window.location.href="user_login.jsp";
+		window.location.href="../user_login.jsp";
 		return;
 	}
 }
@@ -96,18 +104,21 @@ function report(){
  */
 function sendReport(uid,ubyid){
 	$.ajax({
-		url:"http://localhost:8080/hon/UserServlet?method=report",
+		url:"http://localhost:8080/douban/report/reportUser.do",
 		type:"post",
-		data:{"uid":uid,"ubyid":ubyid,"content":$("#reportContent").val()},
-		async: true,
-		success:function(msg){
-			if(msg=="true"){
-				alert("举报内容已发送至管理员");
-				window.location.reload();
-			}else{
-				alert("举报失败，请重新举报");
-				window.location.reload();
-			}
-		}
+		data:JSON.stringify({"userId":uid,"userById":ubyid,"content":$("#reportContent").val()}),
+        contentType:"application/json;charset=utf-8",
+        dataType:"json",
+        success:function(msg){
+            if(msg.code == 200){
+                alert(msg.msg);
+                $("#reportContent").val("");
+                return;
+            }
+            if(msg.code == 400){
+                alert(msg.msg);
+                return;
+            }
+        }
 	});
 }

@@ -11,8 +11,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -35,7 +38,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public UserAndArticle getArticle(int id) {
-        return articleDao.getArticle(id);
+        UserAndArticle userAndArticle = articleDao.getArticle(id);
+        userAndArticle.getArticle().setPictures(pictureDao.getPictures(id));
+        return userAndArticle;
     }
 
     @Override
@@ -51,17 +56,45 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Result deleteArticle(Article article) {
         List<Picture> pictures = pictureDao.getPictures(article.getId());
-        int count = 0;
-        for(Picture picture : pictures){
-            new File(Constant.URL_PREFIX + picture.getUrl()).delete();
-            count += pictureDao.deletePicture(picture);
+        if(ValidateUtil.notNull(pictures)) {
+            int count = 0;
+            for (Picture picture : pictures) {
+                new File(Constant.URL_PREFIX + picture.getUrl()).delete();
+                count += pictureDao.deletePicture(picture);
+            }
+            if (ValidateUtil.isEqual(count, pictures.size())) {
+                return new Result(400, "删除文章失败，请重试", null);
+            }
         }
-        if(!ValidateUtil.isProcessSuccess(pictures, count)){
-            return new Result(400,"删除文章失败，请重试",null);
-        }
-        return articleDao.deleteArticle(article) == 1 ? new Result(200,"删除成功",null) :
+        return ValidateUtil.isEqual(articleDao.deleteArticle(article), Constant.ONE_LINE) ? new Result(200,"删除成功",null) :
                 new Result(400,"删除文章失败，请重试",null);
 
     }
 
+    @Override
+    public Result publishArticle(MultipartFile[] images, HttpServletRequest request) {
+        if(!ValidateUtil.isSessionExist(request, Constant.USER)){
+            return new Result(404,"你暂未登录，请前往登录",null);
+        }
+        if(ValidateUtil.notNull(request.getParameter(Constant.ID))){
+            //如果此文章存在，则删除该文章并重新发表文章
+            this.deleteArticle(new Article(Integer.parseInt(request.getParameter(Constant.ID))));
+        }
+        User user = (User) request.getSession().getAttribute(Constant.USER);
+        //将请求中的信息封装到Article对象中
+        Article article = new Article(request.getParameter(Constant.TITLE),
+                request.getParameter(Constant.CONTENT), new Timestamp(System.currentTimeMillis()),
+                request.getParameter(Constant.TYPE), user.getId());
+        if(ValidateUtil.isEqual(articleDao.publishArticle(article), Constant.ONE_LINE)){
+            return ValidateUtil.isUploadPicturesSuccess(article, pictureDao, images, Constant.ARTICLE_PICTURE) ?
+                    new Result(200,"发表文章成功",null):
+                    new Result(400,"上传图片失败，请重试",null);
+        }
+        return new Result(400,"发表文章失败，请重试",null);
+    }
+
+    @Override
+    public List<Article> getMyArticle(HttpServletRequest request) {
+        return articleDao.getMyArticle(Integer.parseInt(request.getParameter(Constant.ID)));
+    }
 }

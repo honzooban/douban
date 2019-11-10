@@ -8,11 +8,28 @@
     <result column="article_id" jdbcType="INTEGER" property="articleId" />
   </resultMap>
 
+  <resultMap id="Article" type="com.douban.domain.Article">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="time" jdbcType="TIMESTAMP" property="time" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="comment_num" jdbcType="INTEGER" property="commentNum" />
+    <result column="transpond_num" jdbcType="INTEGER" property="transpondNum" />
+    <result column="agreement_num" jdbcType="INTEGER" property="agreementNum" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+  </resultMap>
+
   <insert id="insertCollection">
     insert into collection(time,user_id,article_id) values(#{time},#{userId},#{articleId});
   </insert>
 
   <select id="selectCollectionById" resultMap="BaseResultMap">
     select id from collection where user_id = #{userId} and article_id = #{articleId};
+  </select>
+
+  <select id="getMyCollection" resultMap="Article">
+    select article.id,title,content,article.time from article inner join collection on collection.article_id = article.id where collection.user_id = #{id} order by article.time desc limit 0,2;
   </select>
 </mapper>

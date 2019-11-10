@@ -33,4 +33,18 @@ public interface ArticleDao {
      * @return 删除结果
      */
     int deleteArticle(Article article);
+
+    /**
+     * 发表文章
+     * @param article 文章信息
+     * @return 发表结果
+     */
+    int publishArticle(Article article);
+
+    /**
+     * 获取我的文章
+     * @param id 用户id
+     * @return 文章数据
+     */
+    List<Article> getMyArticle(int id);
 }

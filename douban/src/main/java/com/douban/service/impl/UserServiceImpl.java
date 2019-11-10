@@ -80,7 +80,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserInfo(HttpServletRequest request) {
+    public User getUserInfo(HttpServletRequest request, Integer id) {
+        if(ValidateUtil.notNull(id)) {
+            return userDao.selectUserById(id);
+        }
         User user = (User) request.getSession().getAttribute(Constant.USER);
         return userDao.selectUserByPhone(user.getPhone());
     }
@@ -93,10 +96,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Result updateUserInfo(MultipartFile file, HttpServletRequest request) {
-        int id = Integer.parseInt(request.getParameter(Constant.ID));
-        String gender = request.getParameter(Constant.GENDER);
-        String signature = request.getParameter(Constant.SIGNATURE);
-        User user = new User(id, gender, signature);
+        User user = new User(Integer.parseInt(request.getParameter(Constant.ID)),
+                request.getParameter(Constant.GENDER), request.getParameter(Constant.SIGNATURE));
         if(ValidateUtil.isUploadAvatarSuccess(user, file, Constant.AVATAR)) {
             return userDao.updateUserInfo(user) == 1 ? new Result(200, "修改成功", null) :
                     new Result(400, "修改失败，请重试", null);

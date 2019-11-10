@@ -1,5 +1,7 @@
 package com.douban.domain;
 
+import java.sql.Timestamp;
+
 public class User {
     private Integer id;
 
@@ -17,7 +19,7 @@ public class User {
 
     private String status;
 
-    private String banTime;
+    private Timestamp banTime;
 
 
     public Integer getId() {
@@ -84,11 +86,11 @@ public class User {
         this.status = status;
     }
 
-    public String getBanTime() {
+    public Timestamp getBanTime() {
         return banTime;
     }
 
-    public void setBanTime(String banTime) {
+    public void setBanTime(Timestamp banTime) {
         this.banTime = banTime;
     }
 
