@@ -97,4 +97,12 @@ public class ArticleServiceImpl implements ArticleService {
     public List<Article> getMyArticle(HttpServletRequest request) {
         return articleDao.getMyArticle(Integer.parseInt(request.getParameter(Constant.ID)));
     }
+
+    @Override
+    public PageInfo<Article> searchArticle(Integer pn, HttpServletRequest request) {
+        PageHelper.startPage(pn, Constant.PAGE_SIZE, true);
+        List<Article> articles = articleDao.fuzzySearchArticle(request.getParameter(Constant.MESSAGE));
+        PageInfo<Article> pageInfo = new PageInfo<>(articles);
+        return pageInfo;
+    }
 }

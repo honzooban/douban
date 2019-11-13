@@ -9,6 +9,39 @@
     <result column="user_byid" jdbcType="INTEGER" property="userByid" />
   </resultMap>
 
+  <resultMap id="UserAndRelation" type="com.douban.domain.UserAndRelation">
+    <collection property="user" ofType="com.douban.domain.User">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="password" jdbcType="VARCHAR" property="password" />
+      <result column="phone" jdbcType="VARCHAR" property="phone" />
+      <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+      <result column="gender" jdbcType="VARCHAR" property="gender" />
+      <result column="signature" jdbcType="VARCHAR" property="signature" />
+      <result column="status" jdbcType="VARCHAR" property="status" />
+      <result column="ban_time" jdbcType="TIMESTAMP" property="banTime" />
+    </collection>
+    <collection property="relation" ofType="com.douban.domain.Relation">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="type" jdbcType="VARCHAR" property="type" />
+      <result column="status" jdbcType="VARCHAR" property="status" />
+      <result column="user_id" jdbcType="INTEGER" property="userId" />
+      <result column="user_byid" jdbcType="INTEGER" property="userByid" />
+    </collection>
+  </resultMap>
+
+  <resultMap id="User" type="com.douban.domain.User">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="phone" jdbcType="VARCHAR" property="phone" />
+    <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+    <result column="gender" jdbcType="VARCHAR" property="gender" />
+    <result column="signature" jdbcType="VARCHAR" property="signature" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
+    <result column="ban_time" jdbcType="TIMESTAMP" property="banTime" />
+  </resultMap>
+
   <select id="getRelation" resultMap="BaseResultMap">
     select type,status from relation where user_id = #{id} and user_byid = #{byId};
   </select>
@@ -21,4 +54,20 @@
     insert into relation (status,user_id,user_byid) values (1,#{userId},#{userById});
     insert into relation (status,user_id,user_byid) values (1,#{userById},#{userId});
   </insert>
+
+  <select id="selectAllFriend" resultMap="UserAndRelation">
+    select user.id,avatar,signature,name,type from user inner join relation on relation.user_id in (select user_byid from relation where user_id = #{id} and status = 1) and relation.user_byid = #{id} and user.id = relation.user_id
+  </select>
+
+  <select id="selectAllRelation" resultMap="BaseResultMap">
+    select distinct type from relation where user_id = #{id};
+  </select>
+
+  <select id="selectAllBlackList" resultMap="User">
+    select user.id,avatar,signature,name from user inner join relation on relation.user_id in (select user_byid from relation where user_id = #{id} and status = 1) and relation.user_byid = #{id} and user.id = relation.user_id
+  </select>
+
+  <update id="updateRelationStatus">
+    update relation set status = #{status} where user_id = #{id} and user_byid = #{byId};
+  </update>
 </mapper>

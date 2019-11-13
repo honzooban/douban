@@ -23,4 +23,11 @@ public interface PrivateletterDao {
      * @return 用户间的所有豆邮记录
      */
     List<UserAndPrivateletter> selectAllPrivateletter(@Param("id") int id,@Param("byId") int byId);
+
+    /**
+     * 插入豆邮记录
+     * @param privateletter
+     * @return
+     */
+    int insertPrivateletter(Privateletter privateletter);
 }

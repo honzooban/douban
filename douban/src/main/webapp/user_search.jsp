@@ -1,13 +1,12 @@
-<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8" isELIgnored="false" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>豆瓣-搜索结果</title>
-    <link rel="stylesheet" type="text/css" href="./css/homepage.css">
-    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/homepage.css">
+    <script src="../js/jquery-3.4.0.min.js"></script>
 	<script type="text/javascript">
 		function search(){
 			var message = document.getElementById('searchtext').value;
@@ -25,7 +24,7 @@
                 <tr>
                     <td style="text-align:center;width:120px;"><a class="items" href="../article/getArticles.do?pn=1"><font style="color:#007722;">首页</font></a></td>
                     <td style="text-align:center;width:120px;"><a class="items" href="../user/homepage.do"><font style="color:#007722;">我的豆瓣</font></a></td>
-                    <td style="text-align:center;width:120px;"><a class="items" href="../relation/getPrivateletter.do"><font style="color:#007722;">我的豆邮</font></a></td>
+                    <td style="text-align:center;width:120px;"><a class="items" href="../privateletter/getPrivateletter.do"><font style="color:#007722;">我的豆邮</font></a></td>
                 </tr>
             </table>
         </div>
@@ -62,9 +61,9 @@
     		</div>
     	</div>
     	<div class="foot" style="margin-top:40px;margin-left:540px;">
-        <a href="PageServlet?page=1&method=search&message=${param.message}">首页</a>
-        <c:if test="${pageUser.currentPage>1}">
-       	 	<a href="PageServlet?page=${pageUser.currentPage-1}&method=search&message=${param.message}">上一页</a>
+        <a href="../search/getSearchResult.do?pn=1">首页</a>
+        <c:if test="${article.hasPreviousPage == true || user.hasPreviousPage == true}">
+       	 	<a href="../search/getSearchResult.do?pn=${user.pageNum-1}&method=search&message=${param.message}">上一页</a>
     	</c:if>
     	<c:if test="${pageUser.currentPage!=pageUser.totalPage}">
         	<a href="PageServlet?page=${pageUser.currentPage+1}&method=search&message=${param.message}">下一页</a>

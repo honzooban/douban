@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8" isELIgnored="false"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/sql" prefix="sql"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,9 +18,9 @@
   		transition: 0.8s;
     }
     </style>
-    <link rel="stylesheet" type="text/css" href="./css/homepage.css">
-    <script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
-	<script type="text/javascript" src="./js/myfriend.js"></script>
+    <link rel="stylesheet" type="text/css" href="../css/homepage.css">
+    <script src="../js/jquery-3.4.0.min.js"></script>
+	<script type="text/javascript" src="../js/myfriend.js"></script>
 </head>
 <body>
 	<div class="top-line">
@@ -33,14 +32,14 @@
 				<tr>
 					<td style="text-align:center;width:120px;"><a class="items" href="../article/getArticles.do?pn=1"><font style="color:#007722;">首页</font></a></td>
 					<td style="text-align:center;width:120px;"><a class="items" href="../user/homepage.do"><font style="color:#007722;">我的豆瓣</font></a></td>
-					<td style="text-align:center;width:120px;"><a class="items" href="../relation/getPrivateletter.do"><font style="color:#007722;">我的豆邮</font></a></td>
+					<td style="text-align:center;width:120px;"><a class="items" href="../privateletter/getPrivateletter.do"><font style="color:#007722;">我的豆邮</font></a></td>
 				</tr>
-			</table>
+			</table>，
 		</div>
 		<div class="line-search">
 			<form action="search" method="get">
 				<div><input id="searchtext" size="22" style="width:278px;height:28px;border:0px;margin-top:19px;" maxlength="60" autocomplete="off" value="" placeholder="搜索你感兴趣的内容和人..."></div>
-				<div style="float:right;margin-top:-30px;margin-right:194.5px;"><input type="button" onclick="search()" style="border:0px;width:30px;height:30px;background:url(../image/search.png);background-color:#ffffff;background-size:100%;background-repeat:no-repeat;" /></div>
+				<div style="float:right;margin-top:-30px;margin-right:211.5px;"><input type="button" onclick="search()" style="border:0px;width:30px;height:30px;background:url(../image/search.png);background-color:#ffffff;background-size:100%;background-repeat:no-repeat;" /></div>
 			</form>
 		</div>
 	</div>
@@ -49,32 +48,28 @@
         <h1><font style="font-family:'Microsoft Yahei';font-size:26px"><b>我的好友</b></font></h1>
         <div class="friendType">
         	<ul>
-        		<sql:query dataSource="${snapshot}" var="result">
-        			select distinct relation_type from relation where user_id = ? and relation_status = 1;
-        			<sql:param value="${sessionScope.user.id}" />
-        		</sql:query>
-        		<c:forEach var="row" items="${result.rows}">
-        			<li style="float:left;margin-right:20px;"><input type="button" class="fritype" value="${row.relation_type}"></li>
+        		<c:forEach var="row" items="${relations}">
+        			<li style="float:left;margin-right:20px;"><input type="button" class="fritype" value="${row.type}"></li>
         		</c:forEach>
         	</ul>
         	<br/><br/>
         	<div style="margin-left:0px;width:700px;color:#e6e6e6"><hr/></div>
         	<ul style="line-height:30px;">
-        		<c:forEach var="user" items="${pageObjective.users}">
+        		<c:forEach var="user" items="${friends.list}">
         			<li>
         				<div>
         					<div>
-        						<img src="${user.url}" style="width:50px;height:50px;">
+        						<img src="${user.user.avatar}" style="width:50px;height:50px;">
         					</div>
         					<div style="margin-top:-80px;margin-left:60px;">
-        						<h3><a href="user_userpage.jsp?id=${user.id}"><font size="2.5px">${user.name}</font></a></h3>
-        						<p style="margin-top:-25px;"><font size="2.5px">${user.signature}</font></p>
+        						<h3><a href="../user/getUser.do?id=${user.user.id}"><font size="2.5px">${user.user.name}</font></a></h3>
+        						<p style="margin-top:-25px;"><font size="2.5px">${user.user.signature}</font></p>
         					</div>
         					<div style="margin-left:600px;margin-top:-70px;">
-        						<p style="font-size:13px;color:#999999">${user.type}</p>
+        						<p style="font-size:13px;color:#999999">${user.relation.type}</p>
         					</div>
         					<div style="margin-left:600px;margin-top:-15px;">
-        						<input type="checkbox" name="id" value="${user.id}">
+        						<input type="checkbox" name="id" value="${user.user.id}">
         					</div>
         				</div>
         				<hr style="margin-left:-20px;margin-top:5px;;width:650px;color:#e6e6e6"/>
@@ -82,24 +77,24 @@
         		</c:forEach>
         	</ul>
         	<div style="margin-left:470px;margin-top:20px;">
-        		<input type="button" value="删除好友" class="mf-btn" onclick="deleteFriend(${pageObjective.currentPage},'${sessionScope.user.id}')">&nbsp;&nbsp;&nbsp;
-        		<input type="button" value="移入黑名单" class="mf-btn" onclick="addBlackList(${pageObjective.currentPage},'${sessionScope.user.id}')">
+        		<input type="button" value="删除好友" class="mf-btn" onclick="deleteFriend(${friends.pageNum},'${sessionScope.user.id}')">&nbsp;&nbsp;&nbsp;
+        		<input type="button" value="移入黑名单" class="mf-btn" onclick="addBlackList(${friends.pageNum},'${sessionScope.user.id}')">
         	</div>
         	<div class="foot" style="margin-top:-30px;margin-left:40px;">
-        		<a href="PageServlet?page=1&method=mf">首页</a>
-        		<c:if test="${pageObjective.currentPage>1}">
-       	 			<a href="PageServlet?page=${pageObjective.currentPage-1}&method=mf">上一页</a>
+        		<a href="../relation/getMyFriends.do?pn=1">首页</a>
+        		<c:if test="${friends.hasPreviousPage}">
+       	 			<a href="../relation/getMyFriends.do?pn=${friends.pageNum-1}">上一页</a>
     			</c:if>
-    			<c:if test="${pageObjective.currentPage!=pageObjective.totalPage-1}">
-        		<a href="PageServlet?page=${pageObjective.currentPage+1}&method=mf">下一页</a>
+    			<c:if test="${friends.hasNextPage}">
+        		<a href="../relation/getMyFriends.do?pn=${friends.pageNum+1}">下一页</a>
         		</c:if>
-        		<a href="PageServlet?page=${pageObjective.totalPage-1}&method=mf">尾页</a>
+        		<a href="../relation/getMyFriends.do?pn=${friends.lastPage}">尾页</a>
         	</div>
       	</div>
       </div>
     </div>
   	<div class="myfriend-asize" style="margin-left:1000px;margin-top:210px;">
-         	<p><a class="items" href="user_blacklist.jsp">>管理黑名单</a></p>
+         	<p><a class="items" href="../user/getBlackList.do">>管理黑名单</a></p>
   	</div>
   </body>
 </html>

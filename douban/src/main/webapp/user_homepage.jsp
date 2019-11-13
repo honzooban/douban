@@ -19,7 +19,7 @@
         <tr>
           <td style="text-align:center;width:120px;"><a class="items" href="../article/getArticles.do?pn=1"><font style="color:#007722;">首页</font></a></td>
           <td style="text-align:center;width:120px;"><a class="items" href="../user/homepage.do"><font style="color:#007722;">我的豆瓣</font></a></td>
-          <td style="text-align:center;width:120px;"><a class="items" href="../relation/getPrivateletter.do"><font style="color:#007722;">我的豆邮</font></a></td>
+          <td style="text-align:center;width:120px;"><a class="items" href="../privateletter/getPrivateletter.do"><font style="color:#007722;">我的豆邮</font></a></td>
         </tr>
       </table>
     </div>
@@ -77,7 +77,7 @@
       <div style="position:absolute;margin-top:200px;margin-left:20px">
         <p style="white-space:nowrap;color:#007722"><b>我的好友</b>&nbsp;&nbsp;&nbsp;&nbsp;·&nbsp; ·&nbsp; · &nbsp;·&nbsp; ·&nbsp; ·&nbsp;<p>
         <div style="margin-top:-35px;margin-left:170px;">
-          <a href="PageServlet?page=1&method=mf" class="items" style="color:#666699">全部</a>
+          <a href="../relation/getMyFriends.do?pn=1" class="items" style="color:#666699">全部</a>
         </div>
         <div class="friend" style="position: absolute;width:350px;margin-left:-30px;">
           <c:forEach var="friend" items="${friends}">

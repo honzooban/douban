@@ -10,6 +10,8 @@ public class Constant {
 
     public static final int PHONE_LENGTH = 11;
 
+    public static final String MESSAGE = "message";
+
     public static final String CODE = "code";
 
     public static final String PHONE = "phone";
@@ -47,4 +49,8 @@ public class Constant {
     public static final String ARTICLE_PICTURE = "picture";
 
     public static final int ARTICLE_SHOW_AMOUNT = 2;
+
+    public static final int NOT_FRIEND = 0;
+
+    public static final int BLACK_LIST = 2;
 }

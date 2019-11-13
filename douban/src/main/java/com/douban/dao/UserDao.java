@@ -64,4 +64,11 @@ public interface UserDao {
      * @return 用户信息
      */
     List<User> selectPrivateletterUser(User user);
+
+    /**
+     * 模糊查找相关用户
+     * @param msg 查找内容
+     * @return 用户信息
+     */
+    List<User> fuzzySearchUser(String msg);
 }

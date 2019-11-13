@@ -15,19 +15,21 @@ function send(relation,uid,ubyid){
 		alert("请输入要发送的内容");
 	}
 	$.ajax({
-		url:"http://localhost:8080/hon/UserServlet?method=sendmail",
+		url:"http://localhost:8080/douban/privateletter/sendPrivateletter.do",
 		type:"post",
-		data:{"uid":uid,"byid":ubyid,"text":text},
-		async: true,
+		data:JSON.stringify({"userId":uid,"userById":ubyid,"info":text}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		beforeSend:function(){
 			$("#sendmail").val("发送中");
 		},
 		success:function(msg){
-			if(msg=="true"){
-				alert("发送成功");
+			if(msg.code == 200){
+				alert(msg.msg);
 				window.location.reload();
-			}else{
-				alert("发送失败");
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
 				window.location.reload();
 			}
 		}

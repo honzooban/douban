@@ -19,7 +19,7 @@
 				<tr>
 					<td style="text-align:center;width:120px;"><a class="items" href="../article/getArticles.do?pn=1"><font style="color:#007722;">首页</font></a></td>
 					<td style="text-align:center;width:120px;"><a class="items" href="../user/homepage.do"><font style="color:#007722;">我的豆瓣</font></a></td>
-					<td style="text-align:center;width:120px;"><a class="items" href="../relation/getPrivateletter.do"><font style="color:#007722;">我的豆邮</font></a></td>
+					<td style="text-align:center;width:120px;"><a class="items" href="../privateletter/getPrivateletter.do"><font style="color:#007722;">我的豆邮</font></a></td>
 				</tr>
 			</table>
 		</div>
@@ -46,9 +46,8 @@
 		<div style="margin-top:40px;">
 			<textarea rows="10" cols="80" autocomplete="off" id="doumail" style="resize: none;width:550px;height:150px;"></textarea>
 		</div>
-		<c:set var="relation" value="${relation.status}"/>
 		<div style="margin-top:20px;margin-left:470px;">
-			<input type="button" value="发送豆邮" onclick="send('${relation}',${param.uid},${param.ubyid})" id="sendmail" class="mf-btn" />
+			<input type="button" value="发送豆邮" onclick="send('${relation.status}',${param.id},${param.byId})" id="sendmail" class="mf-btn" />
 		</div>
 	</div><br><br>
 </body>

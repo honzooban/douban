@@ -48,4 +48,8 @@
   <select id="selectPrivateletterUser" resultMap="BaseResultMap">
     select id,name,avatar from user where id in (select user_byid from privateletter where user_id = #{id}) or id in (select user_id from privateletter where user_byid = #{id});
   </select>
+
+  <select id="fuzzySearchUser" resultMap="BaseResultMap">
+    select id,name,avatar,signature from user where name like #{msg}
+  </select>
 </mapper>

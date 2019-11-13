@@ -39,4 +39,8 @@
   <select id="selectAllPrivateletter" resultMap="UserAndPrivateletter">
     select name,avatar,info,time from user inner join privateletter on privateletter.user_id = user.id where user.id in (#{id},#{byId}) and privateletter.user_byid in (#{id},#{byId}) order by time;
   </select>
+
+  <insert id="insertPrivateletter">
+    insert into privateletter(info,time,user_id,user_byid) values (#{info},#{time},#{userId},#{userById});
+  </insert>
 </mapper>

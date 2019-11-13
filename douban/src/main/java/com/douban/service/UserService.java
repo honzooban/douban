@@ -2,6 +2,7 @@ package com.douban.service;
 
 import com.douban.domain.Result;
 import com.douban.domain.User;
+import com.github.pagehelper.PageInfo;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
@@ -77,4 +78,12 @@ public interface UserService {
      * @return 修改结果
      */
     Result updateUserInfo(MultipartFile file, HttpServletRequest request);
+
+    /**
+     * 模糊查找相关用户
+     * @param pn 页数
+     * @param request
+     * @return 用户信息集合
+     */
+    PageInfo<User> searchUser(Integer pn, HttpServletRequest request);
 }

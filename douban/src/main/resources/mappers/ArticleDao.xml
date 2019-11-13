@@ -69,4 +69,8 @@
     <select id="getMyArticle" resultMap="BaseResultMap">
         select id,title,content,article.time from article where user_id = #{id} order by article.time desc limit 0,2;
     </select>
+
+    <select id="fuzzySearchArticle" resultMap="BaseResultMap">
+        select id,title,content,time,type from article where title like #{msg} or content like #{msg}
+    </select>
 </mapper>

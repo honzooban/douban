@@ -6,6 +6,8 @@ import com.douban.domain.Result;
 import com.douban.domain.User;
 import com.douban.service.UserService;
 import com.douban.util.ValidateUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,6 +106,14 @@ public class UserServiceImpl implements UserService {
         }else{
             return new Result(400,"头像上传失败，请重试",null);
         }
+    }
+
+    @Override
+    public PageInfo<User> searchUser(Integer pn, HttpServletRequest request) {
+        PageHelper.startPage(pn, Constant.PAGE_SIZE, true);
+        List<User> users = userDao.fuzzySearchUser(request.getParameter(Constant.MESSAGE));
+        PageInfo<User> pageInfo = new PageInfo<>(users);
+        return pageInfo;
     }
 
     @Override

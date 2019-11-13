@@ -12,18 +12,22 @@ function deleteFriend(page,uid){
 		return;
 	}
 	$.ajax({
-		url:"http://localhost:8080/hon/FriendServlet?method=deleteFriend",
+		url:"http://localhost:8080/douban/relation/deleteFriend.do",
 		type:"post",
-		data:{"userId":uid,"userById":userById},
-		dataType:"text",
+		data:JSON.stringify({"id":uid,"byId":userById}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		traditional:true,
 		success:function(msg){
-			if(msg=="true"){
-				alert("删除好友成功");
-				window.location.href="PageServlet?page="+page+"&method=mf";
-			}else{
-				alert("删除好友失败");
-				window.location.href="PageServlet?page="+page+"&method=mf";
+			if(msg.code == 200){
+				alert(msg.msg);
+				window.location.href="../relation/getMyFriends.do?pn=1";
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+				window.location.href="../relation/getMyFriends.do?pn=1";
+				return;
 			}
 		}
 	})
@@ -41,18 +45,22 @@ function addBlackList(page,uid){
 	    userById[i] = $(this).val();
 	});
 	$.ajax({
-		url:"http://localhost:8080/hon/FriendServlet?method=addBlackList",
+		url:"http://localhost:8080/douban/relation/blackListFriend.do",
 		type:"post",
-		data:{"userId":uid,"userById":userById},
-		dataType:"text",
+		data:JSON.stringify({"id":uid,"byId":userById}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		traditional:true,
 		success:function(msg){
-			if(msg=="true"){
-				alert("移入黑名单成功");
-				window.location.href="PageServlet?page="+page+"&method=mf";
-			}else{
-				alert("移入黑名单失败");
-				window.location.href="PageServlet?page="+page+"&method=mf";
+			if(msg.code == 200){
+				alert(msg.msg);
+				window.location.href="../relation/getMyFriends.do?pn=1";
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+				window.location.href="../relation/getMyFriends.do?pn=1";
+				return;
 			}
 		}
 	})

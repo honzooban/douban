@@ -47,4 +47,11 @@ public interface ArticleDao {
      * @return 文章数据
      */
     List<Article> getMyArticle(int id);
+
+    /**
+     * 模糊查找相关文章
+     * @param msg 查找内容
+     * @return 文章数据
+     */
+    List<Article> fuzzySearchArticle(String msg);
 }

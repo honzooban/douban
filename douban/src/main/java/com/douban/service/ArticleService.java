@@ -64,4 +64,12 @@ public interface ArticleService {
      * @return 文章数据
      */
     List<Article> getMyArticle(HttpServletRequest request);
+
+    /**
+     * 模糊查找相关文章
+     * @param pn 页数
+     * @param request
+     * @return 文章数据
+     */
+    PageInfo<Article> searchArticle(Integer pn, HttpServletRequest request);
 }
