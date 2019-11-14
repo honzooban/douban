@@ -4,7 +4,7 @@
  */
 function search(){
 	var message = document.getElementById('searchtext').value;
-	window.location.href="PageServlet?message="+message+"&method=search";
+	window.location.href="../search/getSearchResult.do?message="+message;
 }
 
 /**
@@ -14,17 +14,20 @@ function search(){
  */
 function delArticle(aid){
 	$.ajax({
-		url:"http://localhost:8080/hon/AdminServlet?method=delate",
+		url:"http://localhost:8080/douban/article/deleteArticle.do",
 		type:"post",
-		data:{"aid":aid},
-		async: true,
+		data:JSON.stringify({"id":aid}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
-				alert("删除成功");
+			if(msg.code == 200){
+				alert(msg.msg);
 				window.location.reload();
-			}else{
-				alert("删除失败");
-				window.location.reload();
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+				return;
 			}
 		}
 	});
@@ -37,17 +40,20 @@ function delArticle(aid){
  */
 function topArticle(aid){
 	$.ajax({
-		url:"http://localhost:8080/hon/AdminServlet?method=top",
+		url:"http://localhost:8080/douban/article/topArticle.do",
 		type:"post",
-		data:{"aid":aid},
-		async: true,
+		data:JSON.stringify({"id":aid}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
-				alert("置顶成功");
+			if(msg.code == 200){
+				alert(msg.msg);
 				window.location.reload();
-			}else{
-				alert("置顶失败");
-				window.location.reload();
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+				return;
 			}
 		}
 	});
@@ -60,17 +66,20 @@ function topArticle(aid){
  */
 function delTop(aid){
 	$.ajax({
-		url:"http://localhost:8080/hon/AdminServlet?method=deltop",
+		url:"http://localhost:8080/douban/article/cancelTop.do",
 		type:"post",
-		data:{"aid":aid},
-		async: true,
+		data:JSON.stringify({"id":aid}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
-				alert("取消置顶成功");
+			if(msg.code == 200){
+				alert(msg.msg);
 				window.location.reload();
-			}else{
-				alert("取消置顶失败");
-				window.location.reload();
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+				return;
 			}
 		}
 	});

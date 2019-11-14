@@ -108,4 +108,38 @@ public class ArticleController {
     public Result publishArticle(MultipartFile[] images,HttpServletRequest request){
         return articleService.publishArticle(images, request);
     }
+
+    /**
+     * 获取管理员管理文章页面及数据
+     * @param pn 页数
+     * @return 管理文章页面及数据
+     */
+    @RequestMapping("operateArticle")
+    public ModelAndView operateArticle(@RequestParam(value = "pn", defaultValue = "1") Integer pn){
+        ModelAndView mv = new ModelAndView();
+        mv.addObject("userAndArticle",articleService.getArticles(pn));
+        mv.setViewName("admin_operate_article");
+        return mv;
+    }
+
+    /**
+     * 置顶文章
+     * @param article 文章信息
+     * @return 置顶结果
+     */
+    @RequestMapping("topArticle")
+    public Result topArticle(@RequestBody Article article){
+        return articleService.topArticle(article);
+    }
+
+
+    /**
+     * 取消置顶文章
+     * @param article 文章信息
+     * @return 取消置顶结果
+     */
+    @RequestMapping("cancelTop")
+    public Result cancelTopArticle(@RequestBody Article article){
+        return articleService.cancelTopArticle(article);
+    }
 }

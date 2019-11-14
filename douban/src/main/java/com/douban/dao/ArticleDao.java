@@ -54,4 +54,11 @@ public interface ArticleDao {
      * @return 文章数据
      */
     List<Article> fuzzySearchArticle(String msg);
+
+    /**
+     * 修改文章状态
+     * @param article 文章信息
+     * @return 修改结果
+     */
+    int updateArticleStatus(Article article);
 }

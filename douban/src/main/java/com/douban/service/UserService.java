@@ -86,4 +86,18 @@ public interface UserService {
      * @return 用户信息集合
      */
     PageInfo<User> searchUser(Integer pn, HttpServletRequest request);
+
+    /**
+     * 封禁用户
+     * @param request
+     * @return 封禁结果
+     */
+    Result banUser(HttpServletRequest request);
+
+    /**
+     * 解封用户
+     * @param user 用户信息
+     * @return 解封结果
+     */
+    Result cancelBanUser(User user);
 }

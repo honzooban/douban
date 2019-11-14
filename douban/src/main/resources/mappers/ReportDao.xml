@@ -6,11 +6,39 @@
     <result column="content" jdbcType="VARCHAR" property="content" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
-    <result column="user_byid" jdbcType="INTEGER" property="userByid" />
+    <result column="user_byid" jdbcType="INTEGER" property="userById" />
+  </resultMap>
+
+  <resultMap id="UserAndReport" type="com.douban.domain.UserAndReport">
+    <collection property="user" ofType="com.douban.domain.User">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="name" jdbcType="VARCHAR" property="name" />
+      <result column="password" jdbcType="VARCHAR" property="password" />
+      <result column="phone" jdbcType="VARCHAR" property="phone" />
+      <result column="avatar" jdbcType="VARCHAR" property="avatar" />
+      <result column="gender" jdbcType="VARCHAR" property="gender" />
+      <result column="signature" jdbcType="VARCHAR" property="signature" />
+      <result column="status" jdbcType="VARCHAR" property="status" />
+      <result column="ban_time" jdbcType="TIMESTAMP" property="banTime" />
+    </collection>
+    <collection property="report" ofType="com.douban.domain.Report">
+      <id column="id" jdbcType="INTEGER" property="id" />
+      <result column="content" jdbcType="VARCHAR" property="content" />
+      <result column="time" jdbcType="TIMESTAMP" property="time" />
+      <result column="user_id" jdbcType="INTEGER" property="userId" />
+      <result column="user_byid" jdbcType="INTEGER" property="userById" />
+    </collection>
   </resultMap>
 
   <insert id="insertReport">
     insert into report (content,time,user_id,user_byid) values (#{content},#{time},#{userId},#{userById});
   </insert>
 
+  <select id="selectAllReport" resultMap="UserAndReport">
+    select name,avatar,ban_time,report.id,content,time,user_byid from report inner join user on report.user_id = user.id
+  </select>
+
+  <delete id="deleteReport">
+    delete from report where id = #{id};
+  </delete>
 </mapper>

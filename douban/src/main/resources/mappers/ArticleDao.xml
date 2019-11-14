@@ -41,7 +41,7 @@
     </resultMap>
 
     <select id="getArticles" resultMap="UserAndArticleMap">
-        select avatar,name,article.id,title,content,type,comment_num,transpond_num,agreement_num from user inner join article
+        select avatar,name,article.id,title,content,article.status,type,comment_num,transpond_num,agreement_num from user inner join article
         on user.id = article.user_id
         where user.id in (select id from user) order by article.status desc, article.time desc
     </select>
@@ -71,6 +71,10 @@
     </select>
 
     <select id="fuzzySearchArticle" resultMap="BaseResultMap">
-        select id,title,content,time,type from article where title like #{msg} or content like #{msg}
+        select id,title,content,time,type from article where title like "%"#{msg}"%" or content like "%"#{msg}"%"
     </select>
+
+    <update id="updateArticleStatus">
+        update article set status = #{status} where id = #{id};
+    </update>
 </mapper>

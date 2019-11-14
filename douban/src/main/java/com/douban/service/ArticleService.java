@@ -72,4 +72,18 @@ public interface ArticleService {
      * @return 文章数据
      */
     PageInfo<Article> searchArticle(Integer pn, HttpServletRequest request);
+
+    /**
+     * 置顶文章
+     * @param article 文章信息
+     * @return 置顶结果
+     */
+    Result topArticle(Article article);
+
+    /**
+     * 取消置顶文章
+     * @param article 文章信息
+     * @return 取消置顶结果
+     */
+    Result cancelTopArticle(Article article);
 }

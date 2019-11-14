@@ -139,4 +139,24 @@ public class UserController {
         mv.addObject("myCollection",collectionService.getMyCollection(request));
         return mv;
     }
+
+    /**
+     * 封禁用户
+     * @param request
+     * @return 封禁结果
+     */
+    @RequestMapping("banUser")
+    public Result banUser(HttpServletRequest request){
+        return userService.banUser(request);
+    }
+
+    /**
+     * 解封用户
+     * @param user 用户信息
+     * @return 解封结果
+     */
+    @RequestMapping("cancelBanUser")
+    public Result cancelBanUser(@RequestBody User user){
+        return userService.cancelBanUser(user);
+    }
 }

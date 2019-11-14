@@ -6,10 +6,6 @@ public class Constant {
 
     public static final int TWO_LINE = 2;
 
-    public static final int CODE_LENGTH = 6;
-
-    public static final int PHONE_LENGTH = 11;
-
     public static final String MESSAGE = "message";
 
     public static final String CODE = "code";
@@ -48,9 +44,15 @@ public class Constant {
 
     public static final String ARTICLE_PICTURE = "picture";
 
-    public static final int ARTICLE_SHOW_AMOUNT = 2;
-
     public static final int NOT_FRIEND = 0;
 
     public static final int BLACK_LIST = 2;
+
+    public static final int TOP_STATUS = 1;
+
+    public static final int NOT_TOP_STATUS = 0;
+
+    public static final String BAN_TIME = "banTime";
+
+    public static final long ONE_DAY_TIME = 86400000;
 }

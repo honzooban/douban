@@ -16,6 +16,7 @@ import org.springframework.util.DigestUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
@@ -114,6 +115,27 @@ public class UserServiceImpl implements UserService {
         List<User> users = userDao.fuzzySearchUser(request.getParameter(Constant.MESSAGE));
         PageInfo<User> pageInfo = new PageInfo<>(users);
         return pageInfo;
+    }
+
+    @Override
+    public Result banUser(HttpServletRequest request) {
+        User result = userDao.selectBanTimeById(Integer.parseInt(request.getParameter(Constant.ID)));
+        if(ValidateUtil.notNull(result)){
+            User user = new User(Integer.parseInt(request.getParameter(Constant.ID)),
+                    new Timestamp(result.getBanTime().getTime() + Integer.parseInt(request.getParameter(Constant.BAN_TIME))*Constant.ONE_DAY_TIME));
+        }
+        User user = new User(Integer.parseInt(request.getParameter(Constant.ID)),
+                new Timestamp(System.currentTimeMillis() + Integer.parseInt(request.getParameter(Constant.BAN_TIME))*Constant.ONE_DAY_TIME));
+        return ValidateUtil.isEqual(userDao.updateUserBanTime(user), Constant.ONE_LINE) ?
+                new Result(200,"封禁成功", null) :
+                new Result(400,"封禁失败，请重试", null);
+    }
+
+    @Override
+    public Result cancelBanUser(User user) {
+        return ValidateUtil.isEqual(userDao.updateUserBanTime(user), Constant.ONE_LINE) ?
+                new Result(200,"解封成功", null) :
+                new Result(400,"解封失败，请重试", null);
     }
 
     @Override

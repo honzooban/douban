@@ -71,4 +71,18 @@ public interface UserDao {
      * @return 用户信息
      */
     List<User> fuzzySearchUser(String msg);
+
+    /**
+     * 修改用户封禁时间
+     * @param user 用户信息
+     * @return 修改结果
+     */
+    int updateUserBanTime(User user);
+
+    /**
+     * 查询用户封禁时间
+     * @param id 用户id
+     * @return 用户信息
+     */
+    User selectBanTimeById(int id);
 }

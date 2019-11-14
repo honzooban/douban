@@ -197,5 +197,5 @@ function deleteTranspond(tid){
  */
 function search(){
 	var message = document.getElementById('searchtext').value;
-	window.location.href="PageServlet?message="+message+"&method=search";
+	window.location.href="../search/getSearchResult.do?message="+message;
 }

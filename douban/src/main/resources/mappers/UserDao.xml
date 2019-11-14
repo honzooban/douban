@@ -50,6 +50,8 @@
   </select>
 
   <select id="fuzzySearchUser" resultMap="BaseResultMap">
-    select id,name,avatar,signature from user where name like #{msg}
+    select id,name,avatar,signature from user where name like "%"#{msg}"%"
   </select>
+  
+  <update id=""
 </mapper>

@@ -64,7 +64,7 @@
   </select>
 
   <select id="selectAllBlackList" resultMap="User">
-    select user.id,avatar,signature,name from user inner join relation on relation.user_id in (select user_byid from relation where user_id = #{id} and status = 1) and relation.user_byid = #{id} and user.id = relation.user_id
+    select user.id,avatar,signature,name from user inner join relation on relation.user_id in (select user_byid from relation where user_id = #{id} and status = 2) and relation.user_byid = #{id} and user.id = relation.user_id
   </select>
 
   <update id="updateRelationStatus">

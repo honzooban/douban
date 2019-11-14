@@ -105,4 +105,20 @@ public class ArticleServiceImpl implements ArticleService {
         PageInfo<Article> pageInfo = new PageInfo<>(articles);
         return pageInfo;
     }
+
+    @Override
+    public Result topArticle(Article article) {
+        article.setStatus(Constant.TOP_STATUS);
+        return ValidateUtil.isEqual(articleDao.updateArticleStatus(article), Constant.ONE_LINE) ?
+                new Result(200,"置顶文章成功", null) :
+                new Result(400,"置顶文章失败，请重试", null);
+    }
+
+    @Override
+    public Result cancelTopArticle(Article article) {
+        article.setStatus(Constant.NOT_TOP_STATUS);
+        return ValidateUtil.isEqual(articleDao.updateArticleStatus(article), Constant.ONE_LINE) ?
+                new Result(200,"取消置顶文章成功", null) :
+                new Result(400,"取消置顶文章失败，请重试", null);
+    }
 }

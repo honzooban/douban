@@ -39,10 +39,10 @@
     	<div style="position:absolute;width:300px;height:100%;margin-left:50px;">
     		<h2>与用户有关的搜索结果：</h2>
     		<div>
-    			<c:forEach var="user" items="${pageUser.users}">
+    			<c:forEach var="user" items="${user.list}">
     				<div style="margin-top:30px">
-    					<div><img src="${user.url}" style="width:70px;height:70px;"></div>
-    					<div style="margin-top:-70px;margin-left:80px;"><a href="user_userpage.jsp?id=${user.id}"><font style="font-size:20px">${user.name}</font></a></div>
+    					<div><img src="${user.avatar}" style="width:70px;height:70px;"></div>
+    					<div style="margin-top:-70px;margin-left:80px;"><a href="../user/getUser.do?id=${user.id}"><font style="font-size:20px">${user.name}</font></a></div>
     					<div style="margin-top:20px;margin-left:80px;"><font style="font-color:#777777;font-size:15px;">${user.signature}</font></div>
     				</div>
     			</c:forEach>
@@ -51,9 +51,9 @@
     	<div style="width:1000px;margin-left:400px;">
     		<h2>与文章有关的搜索结果：</h2>
     		<div>
-    			<c:forEach var="article" items="${pageArticle.articles}">
+    			<c:forEach var="article" items="${article.list}">
     				<div style="margin-top:20px">
-    					<div><a href="user_article.jsp?aid=${article.id}">${article.title}</a><div style="float:right;"><font style="font-color:#777777;font-size:15px;">时间：${article.time}</font></div><div style="float:right;margin-right:40px"><font style="font-color:#777777;font-size:15px;">类型：${article.type}</font></div></div>
+    					<div><a href="../article/getArticle.do?id=${article.id}">${article.title}</a><div style="float:right;"><font style="font-color:#777777;font-size:15px;">时间：${article.time}</font></div><div style="float:right;margin-right:40px"><font style="font-color:#777777;font-size:15px;">类型：${article.type}</font></div></div>
     					<div style="height:200px;overflow:auto;text-overflow:ellipsis;">${article.content}</div>
     					<hr style="width:1000px" />
     				</div>
@@ -61,14 +61,24 @@
     		</div>
     	</div>
     	<div class="foot" style="margin-top:40px;margin-left:540px;">
-        <a href="../search/getSearchResult.do?pn=1">首页</a>
-        <c:if test="${article.hasPreviousPage == true || user.hasPreviousPage == true}">
-       	 	<a href="../search/getSearchResult.do?pn=${user.pageNum-1}&method=search&message=${param.message}">上一页</a>
-    	</c:if>
-    	<c:if test="${pageUser.currentPage!=pageUser.totalPage}">
-        	<a href="PageServlet?page=${pageUser.currentPage+1}&method=search&message=${param.message}">下一页</a>
-        </c:if>
-        <a href="PageServlet?page=${pageUser.totalPage}&method=search&message=${param.message}">尾页</a>
+            <a href="../search/getSearchResult.do?pn=1&message=${param.message}">首页</a>
+            <c:if test="${article.hasPreviousPage || user.hasPreviousPage}">
+                <a href="../search/getSearchResult.do?pn=${article.pageNum-1}&message=${param.message}">上一页</a>
+            </c:if>
+            <c:if test="${article.hasNextPage || user.hasNextPage}">
+                <c:if test="${article.hasNextPage}">
+                    <a href="../search/getSearchResult.do?pn=${article.pageNum+1}&message=${param.message}">下一页</a>
+                </c:if>
+                <c:if test="${user.hasNextPage}">
+                    <a href="../search/getSearchResult.do?pn=${user.pageNum+1}&message=${param.message}">下一页</a>
+                </c:if>
+            </c:if>
+            <c:if test="${article.lastPage > user.lastPage}">
+                <a href="../search/getSearchResult.do?pn=${article.lastPage}&message=${param.message}">尾页</a>
+            </c:if>
+            <c:if test="${article.lastPage < user.lastPage}">
+                <a href="../search/getSearchResult.do?pn=${user.lastPage}&message=${param.message}">尾页</a>
+            </c:if>
      </div>
     </div>
 </body>

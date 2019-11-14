@@ -96,6 +96,11 @@ public class User {
 
     public User(){}
 
+    public User(Integer id, Timestamp banTime) {
+        this.id = id;
+        this.banTime = banTime;
+    }
+
     public User(int id, String gender, String signature) {
         this.id = id;
         this.gender = gender;

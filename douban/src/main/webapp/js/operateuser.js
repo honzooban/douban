@@ -9,17 +9,20 @@ function show(flag){
 function ban(uid){
 	var day = document.getElementById(uid).value;
 	$.ajax({
-		url:"http://localhost:8080/hon/AdminServlet?method=ban",
+		url:"http://localhost:8080/douban/user/banUser.do",
 		type:"post",
-		data:{"uid":uid,"day":day},
-		async: true,
+		data:JSON.stringify({"id":uid,"time":day}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
-				alert("封禁成功");
+			if(msg.code == 200){
+				alert(msg.msg);
 				window.location.reload();
-			}else{
-				alert("封禁失败");
-				window.location.reload();
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+				return;
 			}
 		}
 	});
@@ -27,17 +30,20 @@ function ban(uid){
 
 function del(rid){
 	$.ajax({
-		url:"http://localhost:8080/hon/AdminServlet?method=del",
+		url:"http://localhost:8080/douban/report/deleteReport.do",
 		type:"post",
 		data:{"rid":rid},
-		async: true,
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
-				alert("删除成功");
+			if(msg.code == 200){
+				alert(msg.msg);
 				window.location.reload();
-			}else{
-				alert("删除失败");
-				window.location.reload();
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+				return;
 			}
 		}
 	});
@@ -45,17 +51,20 @@ function del(rid){
 
 function deblocking(uid){
 	$.ajax({
-		url:"http://localhost:8080/hon/AdminServlet?method=dbk",
+		url:"http://localhost:8080/douban/user/cancelBanUser.do",
 		type:"post",
-		data:{"uid":uid},
-		async: true,
+		data:JSON.stringify({"id":uid}),
+		contentType:"application/json;charset=utf-8",
+		dataType:"json",
 		success:function(msg){
-			if(msg=="true"){
-				alert("解封成功");
+			if(msg.code == 200){
+				alert(msg.msg);
 				window.location.reload();
-			}else{
-				alert("解封失败");
-				window.location.reload();
+				return;
+			}
+			if(msg.code == 400){
+				alert(msg.msg);
+				return;
 			}
 		}
 	});
